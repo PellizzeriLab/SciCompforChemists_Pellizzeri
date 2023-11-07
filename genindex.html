@@ -1,0 +1,1159 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; Scientific Computing for Chemists with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="notebooks/introduction/intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Scientific Computing for Chemists with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Scientific Computing for Chemists with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="notebooks/introduction/intro.html">
+                    Scientific Computing for Chemists with Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_00/chap_00_notebook.html">Chapter 0: Python &amp; Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_01/chap_01_notebook.html">Chapter 1: Basic Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_02/chap_02_notebook.html">Chapter 2: Intermediate Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_03/chap_03_notebook.html">Chapter 3: Plotting with Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_04/chap_04_notebook.html">Chapter 4: NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_05/chap_05_notebook.html">Chapter 5: Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_06/chap_06_notebook.html">Chapter 6: Signal &amp; Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_07/chap_07_notebook.html">Chapter 7: Image Processing &amp; Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_08/chap_08_notebook.html">Chapter 8: Mathematics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_09/chap_09_notebook.html">Chapter 9: Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_10/chap_10_notebook.html">Chapter 10: Plotting with Seaborn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_11/chap_11_notebook.html">Chapter 11: Nuclear Magnetic Resonance with NMRglue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_12/chap_12_notebook.html">Chapter 12: Machine Learning using Scikit-Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_13/chap_13_notebook.html">Chapter 13: Command Line &amp; Spyder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_14/chap_14_notebook.html">Chapter 14: Optimization and Root Finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_15/chap_15_notebook.html">Chapter 15: RDKit for Cheminformatics <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/chapter_16/chap_16_notebook.html">Chapter 16: Bioinformatics with Biopython and Nglview <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Index</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Index</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-1">algebra</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-0">alias</a>
+</li>
+      <li><a href="notebooks/chapter_00/chap_00_notebook.html#index-0">Anaconda software installer</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-2">anonymous function</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-7">arguments</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-1">arrays</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-9">average</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-15">balancing chemical equations</a>
+</li>
+      <li>
+    Beer&#39;s law
+
+      <ul>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-13">using optimization</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-14">with matricies</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-0">bioinformatics</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-15">blackbody radiation</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-11">blind signal (or source) seperation</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-15">boolean logic</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-23">break</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-6">broadcasting</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-20">calculus</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-5">classification</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-10">clustering</a>
+</li>
+      <li><a href="notebooks/chapter_13/chap_13_notebook.html#index-0">command line</a>
+</li>
+      <li><a href="notebooks/chapter_00/chap_00_notebook.html#index-2">comments</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-1">comprehension</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-16">conditions</a>
+</li>
+      <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-5">confidence intervals</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-6">confusion matrix</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-1">constants</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-4">constrained optimization</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-24">continue</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-11">curve fitting</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-15">d-orbital</a>
+</li>
+      <li>
+    DataFrame
+
+      <ul>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-10">concatenation</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-2">create</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-7">drop columns</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-6">insert columns</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-9">merge</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-5">statistics</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-4">descriptors</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-4">dictionaries</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-21">differentiation</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-8">dimensionality reduction</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-32">docstrings</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-16">eigenvalues</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-17">eigenvectors</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-12">encoding numbers</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-11">enumeration</a>
+</li>
+      <li>
+    equilibrium
+
+      <ul>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-4">ICE table</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-2">kinetic simulation</a>
+</li>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-5">solving double equilibra</a>
+</li>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-18">solving with polynomials</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-15">error handling</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-17">except</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-8">factorial</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-2">factoring polynomials</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-3">fancy indexing</a>
+</li>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-5">features</a>
+</li>
+      <li>
+    file input/output
+
+      <ul>
+        <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-7">multiple files</a>
+</li>
+        <li><a href="notebooks/chapter_11/chap_11_notebook.html#index-1">reading NMR data</a>
+</li>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-28">with NumPy</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-3">with pandas</a>
+</li>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-26">with Python</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-4">floats</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-22">for loops</a>
+</li>
+      <li>
+    Fourier transform
+
+      <ul>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-11">basics</a>
+</li>
+        <li><a href="notebooks/chapter_11/chap_11_notebook.html#index-2">NMR</a>
+</li>
+      </ul></li>
+      <li>
+    functions
+
+      <ul>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-6">arguments</a>
+</li>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-5">calling functions</a>
+</li>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-30">creating functions</a>
+</li>
+        <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-14">recursive</a>
+</li>
+        <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-13">variable arguments</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-25">gas chromatography</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-17">gas law</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-1">GC content</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-8">generator</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-19">Hamming distance</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-12">Hess&#39;s law</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    images
+
+      <ul>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-8">blob detection</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-3">color</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-7">contrast</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-6">encoding</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-9">entropy</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-1">grayscale</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-2">loading</a>
+</li>
+        <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-4">saving</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-20">immutable</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-1">InChI</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-13">indexing</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-6">inflection points</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-0">integer division</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-3">integers</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-22">integration</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-15">interpolation</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-12">island of stability</a>
+</li>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-3">isomers</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-23">isotopic decay kinetics</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_00/chap_00_notebook.html#index-1">Jupyter notebooks</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-4">k-fold cross validation</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-9">k-means</a>
+</li>
+      <li>
+    kinetics
+
+      <ul>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-10">determine rate constants</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-1">simulations</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-4">stochastic simulations</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-4">label plotting axes</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-3">lambda function</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-8">least squares</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-20">legend</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-5">linear algebra</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    linear equation solving
+
+      <ul>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-9">with optimization</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-7">with SymPy</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-17">lists</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-21">loops</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-0">machine learning</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-4">masking</a>, <a href="notebooks/chapter_06/chap_06_notebook.html#index-5">[1]</a>
+</li>
+      <li>
+    matrix
+
+      <ul>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-6">determinant</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-8">dot product</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-18">eigenvalues</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-19">eigenvectors</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-9">inverse</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-11">pseudoinverse</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-10">singular matrix</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-3">maximization</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-2">maximum</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-11">median</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-24">meshgrid</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-14">method</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-2">minimization</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-3">minimum</a>
+</li>
+      <li>
+    missing values
+
+      <ul>
+        <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-13">with NumPy</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-8">with pandas</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-4">mmCIF</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-12">mode</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-6">module</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-1">modulo</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-2">modulus</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-14">nan</a>
+</li>
+      <li>
+    NMR
+
+      <ul>
+        <li><a href="notebooks/chapter_11/chap_11_notebook.html#index-0">processing</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-0">simulation</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-12">nonlinear regression or curve fitting</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-11">nuclide stability</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-0">NumPy</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-0">optimization</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-0">pandas</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-25">pass</a>
+</li>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-3">PDB</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-10">percentile</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-16">pesudorandom numbers</a>
+</li>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-16">Plank&#39;s law</a>
+</li>
+      <li>
+    plotting
+
+      <ul>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-22">3D</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-9">bar plot</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-2">categorical plots</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-2">colors</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-6">figure size</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-6">heat map</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-13">histogram</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-5">kde plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-3">markers</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-21">multifigure</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-19">overlaying</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-17">pie plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-18">polar plot</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-0">regression plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-7">saving plots</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-10">scatter plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-14">stem plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-16">step plot</a>
+</li>
+        <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-23">surface plot</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-3">violin plot</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    polymers
+
+      <ul>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-8">block polymers</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-7">copolymers</a>
+</li>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-6">random flight</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-4">quartile</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-1">radial wave function</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-18">raising exceptions</a>
+</li>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-5">Ramachandran plots</a>
+</li>
+      <li>
+    random numbers
+
+      <ul>
+        <li><a href="notebooks/chapter_09/chap_09_notebook.html#index-3">in simulations</a>
+</li>
+        <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-15">with NumPy</a>
+</li>
+        <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-9">with Python</a>
+</li>
+      </ul></li>
+      <li>
+    regression
+
+      <ul>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-6">curve fitting</a>
+</li>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-13">linear</a>
+</li>
+        <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-3">machine learning</a>
+</li>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-14">nonlinear</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-13">normal equation</a>
+</li>
+        <li><a href="notebooks/chapter_10/chap_10_notebook.html#index-1">regression plot</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-7">residuals</a>
+</li>
+      <li>
+    root finding
+
+      <ul>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-14">optimization</a>
+</li>
+        <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-3">with SymPy</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-5">saving images</a>
+</li>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-8">saving plots</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-9">Savitzky-Golay</a>
+</li>
+      <li><a href="notebooks/chapter_07/chap_07_notebook.html#index-0">scikit-image</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-1">scikit-learn</a>
+</li>
+      <li>
+    SciPy
+
+      <ul>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-12">Fourier transform</a>
+</li>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-0">introduced</a>
+</li>
+        <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-1">optimization</a>
+</li>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-4">signal processing</a>
+</li>
+        <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-10">smoothing data</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-31">scope</a>
+</li>
+      <li><a href="notebooks/chapter_16/chap_16_notebook.html#index-2">sequence alignment</a>
+</li>
+      <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-1">Series</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-5">sets</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-12">slicing</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-7">slope</a>
+</li>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-0">SMILES</a>
+</li>
+      <li><a href="notebooks/chapter_06/chap_06_notebook.html#index-8">smooting signal</a>
+</li>
+      <li>
+    sort
+
+      <ul>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-18">lists</a>
+</li>
+        <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-7">NumPy arrays</a>
+</li>
+      </ul></li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-8">standard deviation</a>
+</li>
+      <li><a href="notebooks/chapter_15/chap_15_notebook.html#index-2">stereochemistry</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-11">strings</a>
+</li>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-2">supervised learning</a>
+</li>
+      <li><a href="notebooks/chapter_08/chap_08_notebook.html#index-0">SymPy</a>
+</li>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-0">syntactic sugar</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-5">title on plot</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-2">transpose</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-16">try</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-19">tuples</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_12/chap_12_notebook.html#index-7">unsupervised learning</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_14/chap_14_notebook.html#index-19">van der Waals equation</a>
+</li>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-10">variable naming rules</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-9">variables</a>
+</li>
+      <li><a href="notebooks/chapter_04/chap_04_notebook.html#index-5">vectorization</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_03/chap_03_notebook.html#index-1">wave function</a>
+</li>
+      <li>
+    writing files
+
+      <ul>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-29">with NumPy</a>
+</li>
+        <li><a href="notebooks/chapter_05/chap_05_notebook.html#index-4">with Pandas</a>
+</li>
+        <li><a href="notebooks/chapter_01/chap_01_notebook.html#index-27">with Python</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/chapter_02/chap_02_notebook.html#index-10">zipping</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Charles J. Weiss
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2017-2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Scientific Computing for Chemists with Python is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

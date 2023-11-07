@@ -1,0 +1,1415 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Chapter 6: Signal &amp; Noise &#8212; Scientific Computing for Chemists with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/chapter_06/chap_06_notebook';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 7: Image Processing &amp; Analysis" href="../chapter_07/chap_07_notebook.html" />
+    <link rel="prev" title="Chapter 5: Pandas" href="../chapter_05/chap_05_notebook.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../introduction/intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Scientific Computing for Chemists with Python - Home"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Scientific Computing for Chemists with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../introduction/intro.html">
+                    Scientific Computing for Chemists with Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_00/chap_00_notebook.html">Chapter 0: Python &amp; Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_01/chap_01_notebook.html">Chapter 1: Basic Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_02/chap_02_notebook.html">Chapter 2: Intermediate Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_03/chap_03_notebook.html">Chapter 3: Plotting with Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_04/chap_04_notebook.html">Chapter 4: NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_05/chap_05_notebook.html">Chapter 5: Pandas</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 6: Signal &amp; Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_07/chap_07_notebook.html">Chapter 7: Image Processing &amp; Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_08/chap_08_notebook.html">Chapter 8: Mathematics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_09/chap_09_notebook.html">Chapter 9: Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_10/chap_10_notebook.html">Chapter 10: Plotting with Seaborn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_11/chap_11_notebook.html">Chapter 11: Nuclear Magnetic Resonance with NMRglue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_12/chap_12_notebook.html">Chapter 12: Machine Learning using Scikit-Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_13/chap_13_notebook.html">Chapter 13: Command Line &amp; Spyder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_14/chap_14_notebook.html">Chapter 14: Optimization and Root Finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_15/chap_15_notebook.html">Chapter 15: RDKit for Cheminformatics <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_16/chap_16_notebook.html">Chapter 16: Bioinformatics with Biopython and Nglview <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists/issues/new?title=Issue%20on%20page%20%2Fnotebooks/chapter_06/chap_06_notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/chapter_06/chap_06_notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 6: Signal & Noise</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-detection">6.1 Feature Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-maxima-minima">6.1.1 Global Maxima &amp; Minima</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-maximums-minimums">6.1.2 Local Maximums &amp; Minimums</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slopes-inflection-points">6.1.3 Slopes &amp; Inflection Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing-data">6.2 Smoothing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unweighted-average">6.2.1 Unweighted Average</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-averages">6.2.2 Weighted Averages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-smoothing">6.2.3 Median Smoothing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#savitzkygolay">6.2.4 Savitzky–Golay</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-transforms">6.3 Fourier Transforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-interpolation">6.4 Fitting &amp; Interpolation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">6.4.1 Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-fitting">6.4.2 Polynomial Fitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation">6.4.3 Interpolation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-6-signal-noise">
+<span id="id1"></span><h1>Chapter 6: Signal &amp; Noise<a class="headerlink" href="#chapter-6-signal-noise" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>When collecting data from a scientific instrument, a measurement is returned as a value or series of values, and these values are composed of both signal and noise. The signal is the component of interest while the noise is random instrument response resulting from a variety of sources that can include the instrument itself, the sample holder, and even the tiny vibrations of the building. For the most interpretable data, you want the largest signal-to-noise ratio possible in order to reliably identify the features in the data.</p>
+<p id="index-0">This chapter introduces the processing of signal data including detecting features, removing noise from the data, and fitting the data to mathematical models. We will be using the NumPy library in this chapter and also start to use modules from the SciPy library. SciPy, short for “scientific python,” is one of the core libraries in the scientific Python ecosystem. This library includes a variety of modules for dealing with signal data, performing Fourier transforms, and integrating sampled data among other common tasks in scientific data analysis. Table 1 summarizes some of the key modules in the SciPy library.</p>
+<p id="index-1"><strong>Table 1</strong> Common SciPy Modules</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Module</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">constants()</span></code></p></td>
+<td class="text-left"><p>Compilation of scientific constants</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">fft()</span></code></p></td>
+<td class="text-left"><p>Fourier transform functions</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">integrate()</span></code></p></td>
+<td class="text-left"><p>Integration for both functions and sampled data</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">interpolate()</span></code></p></td>
+<td class="text-left"><p>Data interpolation</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">io()</span></code></p></td>
+<td class="text-left"><p>File importers and exporters</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">linalg()</span></code></p></td>
+<td class="text-left"><p>Linear algebra functions</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">optimize()</span></code></p></td>
+<td class="text-left"><p>Optimization algorithms</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">signal()</span></code></p></td>
+<td class="text-left"><p>Signal processing functions</p></td>
+</tr>
+</tbody>
+</table>
+<p>In contrast to NumPy, each module from SciPy needs to be imported individually, so <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">scipy</span></code> is not going help you much. Instead, you need to do the following to import a module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">module</span>
+</pre></div>
+</div>
+<p>Alternatively, you can import a single function from a module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.module</span> <span class="kn">import</span> <span class="n">function</span>
+</pre></div>
+</div>
+<p>Because NumPy and plotting are used heavily in signal processing, the examples in this chapter assume the following NumPy and matplotlib imports.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="feature-detection">
+<span id="id2"></span><h2>6.1 Feature Detection<a class="headerlink" href="#feature-detection" title="Permalink to this heading">#</a></h2>
+<p>When analyzing experimental data, there are typically key features in the signal that you are most interested in. Often, they are peaks or a series of peaks, but they can also be negative peaks (i.e., low point), the slopes, or inflection points. This section covers extracting feature information from signal data.</p>
+<section id="global-maxima-minima">
+<span id="id3"></span><h3>6.1.1 Global Maxima &amp; Minima<a class="headerlink" href="#global-maxima-minima" title="Permalink to this heading">#</a></h3>
+<span class="target" id="index-2"></span><p id="index-3">The simplest and probably most commonly sought after features in signal data are peaks and negative peaks. These are known as the <em>maxima</em> and <em>minima</em>, respectively, or collectively known as the <em>extrema</em>. In the simplest data, there may be only one peak or negative peak, so finding it is a matter of finding the maximum or minimum value in the data. For this, we can use NumPy’s <code class="docutils literal notranslate"><span class="pre">np.maximum()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.minimum()</span></code> functions, and these functions can also be called using the shorter <code class="docutils literal notranslate"><span class="pre">np.max()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.min()</span></code> function calls, respectively.</p>
+<p>To demonstrate peak finding, we will use both a <span class="math notranslate nohighlight">\(^{13}\)</span>C{<span class="math notranslate nohighlight">\(^1\)</span>H} Nuclear Magnetic Resonance (NMR) spectrum and an infrared (IR) spectrum. These data are imported below using NumPy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nmr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;data/13C_ethanol.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                    <span class="n">skip_footer</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Chemical Shift, ppm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8bdafa7de3542751e0182558d58d3acbc034c5b554a3d04eab12519de8ba26d1.svg" src="../../_images/8bdafa7de3542751e0182558d58d3acbc034c5b554a3d04eab12519de8ba26d1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;data/IR_acetone.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ir</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">ir</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavenumbers, cm$^{-1}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Transmittance, %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">600</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a37cc78fcd98e2b2112b5a8f00fb9f9f9526a56cee1bd5992e0b566a17a6dce9.svg" src="../../_images/a37cc78fcd98e2b2112b5a8f00fb9f9f9526a56cee1bd5992e0b566a17a6dce9.svg" /></div>
+</div>
+<p>NMR resonances are positive peaks while IR stretches are represented here as negative peaks, so we can find the largest features in both spectra by finding the maximum value in the NMR spectrum and the smallest value in the IR spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11.7279863357544
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ir</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66.80017
+</pre></div>
+</div>
+</div>
+</div>
+<p>These functions output the max and min values of the independent variable (<span class="math notranslate nohighlight">\(y\)</span>-axis). If we want to know the location on the <span class="math notranslate nohighlight">\(x\)</span>-axes, we need to use the NumPy functions <code class="docutils literal notranslate"><span class="pre">np.argmax()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.argmin()</span></code> which return the indices of the max or min values instead of the actual value (“arg” is short for <em>argument</em>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">imax</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5395
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ir</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">imin</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2302
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the indices, we can extract the desired information using indexing of the <span class="math notranslate nohighlight">\(x\)</span>-axes. Below, the largest peak in the NMR spectrum is at 18.3 ppm while the smallest transmittance (i.e., largest absorbance) is at 1710 cm<span class="math notranslate nohighlight">\(^{-1}\)</span> in the IR spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18.312606267778
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ir</span><span class="p">[</span><span class="n">imin</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1710.068
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below, these values are plotted on the spectra as orange dots to validate that they are indeed the largest features in the spectra.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Chemical Shift, ppm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/252a21f84d886e2ad24cb264a8314fa263c39da630aed3180188a1dc80168fa7.svg" src="../../_images/252a21f84d886e2ad24cb264a8314fa263c39da630aed3180188a1dc80168fa7.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ir</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">ir</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ir</span><span class="p">[</span><span class="n">imin</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">ir</span><span class="p">[</span><span class="n">imin</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavenumbers, cm$^{-1}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Transmittance, %&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5fcca8030ff0bca7b3d639bccabadeda06e758c24f8142c3c9400a7a017a0660.svg" src="../../_images/5fcca8030ff0bca7b3d639bccabadeda06e758c24f8142c3c9400a7a017a0660.svg" /></div>
+</div>
+<p>Both of these functions find the <em>global extremes</em> (or <em>global extrema</em>). If all you need is the largest feature in a spectrum, this works just fine. To find multiple features, we will need to find the local extrema addressed in the following section.</p>
+</section>
+<section id="local-maximums-minimums">
+<span id="id4"></span><h3>6.1.2 Local Maximums &amp; Minimums<a class="headerlink" href="#local-maximums-minimums" title="Permalink to this heading">#</a></h3>
+<p id="index-4">A considerable amount of data in science contain numerous peaks and negative peaks which are called <em>local extrema</em>. To locate the multiple max and min values, we will use SciPy’s relative max/min functions <code class="docutils literal notranslate"><span class="pre">argrelmax()</span></code> and <code class="docutils literal notranslate"><span class="pre">argrelmin()</span></code>. These functions determine if a point is a max/min by checking a range of data points on both sides to see if the point is the larges/smallest. The range of data points examined is known as the window, and the window can be modified using the <code class="docutils literal notranslate"><span class="pre">order</span></code> argument. Instead of the actual max/min values, these functions return the indices as the “arg” part of the name suggests.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">argrelmax</span><span class="p">,</span> <span class="n">argrelmin</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imax</span> <span class="o">=</span> <span class="n">argrelmax</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">imax</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1219, 5395]),)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">argrelmax()</span></code> function returned two indices as an array wrapped in a tuple. If we plot the maxima marked with dots, we see that the function correctly identified both peaks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;C1o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Chemical Shift, ppm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a5e39c9a8e6157c8891a4084bba8bdc3befcf07ee9057353ee4b77ecd9320fb7.svg" src="../../_images/a5e39c9a8e6157c8891a4084bba8bdc3befcf07ee9057353ee4b77ecd9320fb7.svg" /></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">argrelmax()</span></code> function may at times identify an edge or a point in a flat region as a local maximum because there is nothing larger near it. There are multiple ways to mitigate these erroneous peaks. First, we can increase the window for which the function checks to see if a point is the largest value in its neighborhood. Unfortunately, making the window too large can also prevent the identification of multiple extrema near each other. The second mitigation is to change the function’s mode from the default <code class="docutils literal notranslate"><span class="pre">'clip'</span></code> to <code class="docutils literal notranslate"><span class="pre">'wrap'</span></code>. This makes the function treat the data as wrapped around on itself instead of stopping at the edge. That is, both edges of the data are treated as being connected. This makes it more likely that an extrema value is in the neighborhood. Finally, the user can filter the returned for values that correspond to peaks above a certain theshold value. Below is an example of filtering values based on a threshold. The window below is intentionally narrowed so that the <code class="docutils literal notranslate"><span class="pre">argrelmax()</span></code> function returns too many values for demonstration purposes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imax</span> <span class="o">=</span> <span class="n">argrelmax</span><span class="p">(</span><span class="n">nmr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">imax</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1219, 2860, 3943, 5395, 6613])
+</pre></div>
+</div>
+</div>
+</div>
+<p id="index-5">Next, we will create a boolean mask (see <a class="reference internal" href="../chapter_04/chap_04_notebook.html#id16"><span class="std std-ref">section 4.3.4</span></a>) which is a series of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values indicating if the data point is above a threshold value or not. In this example, we are using <code class="docutils literal notranslate"><span class="pre">1</span></code> as a threshold, but another threshold value may be more appropriate for different data. This is accomplished below by using the boolean <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> operator. The <code class="docutils literal notranslate"><span class="pre">nmr[imax,</span> <span class="pre">1]</span></code> indexes the identified peaks from above and only returns the height values as a result of the <code class="docutils literal notranslate"><span class="pre">1</span></code>. If the <code class="docutils literal notranslate"><span class="pre">1</span></code> was not included, we would get a collection of [ppm, height] pairs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">nmr</span><span class="p">[</span><span class="n">imax</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span>
+<span class="n">mask</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False, False,  True, False])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we treat the mask of <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> values as if they are indicies to get only the values for legitimate peaks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imax</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1219, 5395])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="slopes-inflection-points">
+<span id="id5"></span><h3>6.1.3 Slopes &amp; Inflection Points<a class="headerlink" href="#slopes-inflection-points" title="Permalink to this heading">#</a></h3>
+<span class="target" id="index-6"></span><p id="index-7">The slope is a useful feature as it can be used to identify inflection points, edges, and make subtle features in a curve more obvious. Unfortunately, noisy data can make it challenging to examine the slope as the noise causes the slope to fluctuate so much that it sometimes dwarfs the overall signal. It is sometimes recommended that the noise be first removed by signal smoothing covered in section 6.2 before trying to identify signal features. To demonstrate the challenges of noisy data, we will generate both noise-free and noisy synthetic data below and calculate the slopes for both.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">y_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_noisy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.07</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c57c0132795587be30faacca9dba49a9db1f6699c671b7c8eba484c86e8377ec.svg" src="../../_images/c57c0132795587be30faacca9dba49a9db1f6699c671b7c8eba484c86e8377ec.svg" /></div>
+</div>
+<p>We will use NumPy to calculate the slope using the <code class="docutils literal notranslate"><span class="pre">np.diff()</span></code> function which calculates the differential of a user defined order (<code class="docutils literal notranslate"><span class="pre">n</span></code>). Because the slope is the <em>dy/dx</em> between every pair of adjacent points, the resulting slope data is one data point shorter than the original data. This is important when plotting the data because the length of the x and y values must be the same.</p>
+<p>When examing the slope, it is important to use smooth data. In the example below, the slope from the noise in the noisy data dwarfs that of the main signal. Therefore, we will use the slope of the smooth data to find the inflection point below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="mi">1000</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">dy_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y_smooth</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dy_noisy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y_noisy</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span> <span class="c1"># x values one shorter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dy_noisy</span><span class="o">/</span><span class="n">dx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Noisy Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dy_smooth</span><span class="o">/</span><span class="n">dx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Smooth Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Slope, dy/dx&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/932468513000651a29f3d655125df105bdced0e2efce6334634208ae891ea80b.svg" src="../../_images/932468513000651a29f3d655125df105bdced0e2efce6334634208ae891ea80b.svg" /></div>
+</div>
+<p>Because the inflection point in the center of the data has a negative slope, we will need to find the minimum slope. This may not always be the case with other data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dy_smooth</span><span class="p">)</span>  <span class="c1"># finds min slope index</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/25e38972d14d351fe3c65bade298dd30ea2dacb79a95f31e644f1e4ee8dc9b01.svg" src="../../_images/25e38972d14d351fe3c65bade298dd30ea2dacb79a95f31e644f1e4ee8dc9b01.svg" /></div>
+</div>
+</section>
+</section>
+<section id="smoothing-data">
+<span id="id6"></span><h2>6.2 Smoothing Data<a class="headerlink" href="#smoothing-data" title="Permalink to this heading">#</a></h2>
+<p id="index-8">It is not uncommon to collect signal data that has a considerable amount of noise in it. Smoothing the data can help in the processing and analysis of the data such as making it easier to identify peaks or preventing the noise from hiding the extremes in the derivative of the data. Smoothing alters the actual data, so it is important to be transparent to others that the data were smoothed and how they were smoothed.</p>
+<p>There are a variety of ways to smooth data including moving averages, band filters, and the Savitzky-Golay filter. We will focus on moving averages and Savitzky-Golay here. For this section, we will work with a noisy cyclic voltammogram (CV) stored in the file <em>CV_noisy.csv</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CV</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;data/CV_noisy.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">potent</span> <span class="o">=</span> <span class="n">CV</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">curr</span> <span class="o">=</span> <span class="n">CV</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">potent</span><span class="p">,</span> <span class="n">curr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Potential, V&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Current, A&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/27e8617c8a4041a09dfd3b92dbefd6a1b6ed0c6d185682e7dbafcc62d6c33e90.svg" src="../../_images/27e8617c8a4041a09dfd3b92dbefd6a1b6ed0c6d185682e7dbafcc62d6c33e90.svg" /></div>
+</div>
+<section id="unweighted-average">
+<span id="id7"></span><h3>6.2.1 Unweighted Average<a class="headerlink" href="#unweighted-average" title="Permalink to this heading">#</a></h3>
+<p>The first and simplest way to smooth data is to take the <em>moving average</em> of each data point with its immediate neighbors. This is an <em>unweighted sliding average smooth</em> or a <em>rectangular boxcar smooth</em>. From noisy data point <span class="math notranslate nohighlight">\(D_j\)</span>, we get smoothed data point <span class="math notranslate nohighlight">\(S_j\)</span> by the following equation where <span class="math notranslate nohighlight">\(D_{j-1}\)</span> and <span class="math notranslate nohighlight">\(D_{j+1}\)</span> are the points immediately preceding and following a data point <span class="math notranslate nohighlight">\(D_j\)</span>, respectively.</p>
+<div class="math notranslate nohighlight">
+\[ S_j = \frac{D_{j-1} + D_j + D_{j+1}}{3} \]</div>
+<p>One thing to note about this smoothing method is that it is only valid for all points except the first and last because there are no data points both before and after them to take the average with. As a result, the smoothed data is two data points shorter. There are approximations that can be used to maintain the length of the data, but for simplicity, we will allow the data to shorten.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span> <span class="o">=</span> <span class="n">curr</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">curr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">curr</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="n">rect_smooth</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">/</span> <span class="mi">3</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">potent</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">rect_smooth</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/263aa24ecf29965cb0ef02f1e71092e6e5841bbda6a773fa297ce77f17e6b4af.svg" src="../../_images/263aa24ecf29965cb0ef02f1e71092e6e5841bbda6a773fa297ce77f17e6b4af.svg" /></div>
+</div>
+<p>The data are smoothed relative to the original data, but there is still a considerable amount of noise present.</p>
+</section>
+<section id="weighted-averages">
+<span id="id8"></span><h3>6.2.2 Weighted Averages<a class="headerlink" href="#weighted-averages" title="Permalink to this heading">#</a></h3>
+<p>The above method treats each point equally and only takes the average with the immediately adjacent data points. The <em>triangular smooth</em> approach averages extra data points with the points closer to the original point weighted more heavily than those further away. For example, if we take the average using five data points, this is described by the following equation.</p>
+<div class="math notranslate nohighlight">
+\[ S_j = \frac{D_{j-2} + 2D_{j-1} + 3D_j + 2D_{j+1} + D_{j+2}}{9} \]</div>
+<p>The resulting data is shortened by four points as the end points have insufficient neighbors to be averaged.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span> <span class="o">=</span> <span class="n">curr</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">curr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">curr</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">curr</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">curr</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="n">tri_smooth</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">/</span> <span class="mi">9</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">potent</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">tri_smooth</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1b32e470e0e5088316b54a6b98160a95007056b00859ce7818c9fe17dc01235c.svg" src="../../_images/1b32e470e0e5088316b54a6b98160a95007056b00859ce7818c9fe17dc01235c.svg" /></div>
+</div>
+<p>The triangular smooth results in a smoother data set than the rectangular smooth. This is not surprising as applying the triangular smooth above is mathematically equivalent to applying the rectangular smooth twice.</p>
+</section>
+<section id="median-smoothing">
+<span id="id9"></span><h3>6.2.3 Median Smoothing<a class="headerlink" href="#median-smoothing" title="Permalink to this heading">#</a></h3>
+<p>While the above filters take some form of the mean of the surrounding data points, a median filter takes the median. This filter is sometimes applied to images because it reduces noise while maintaining sharp edges.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">curr</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="n">curr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">curr</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">median_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">array2d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">potent</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">median_smooth</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c44cf796d185fcc8a138a09d8ecd8a018b68f9e0baa56714d2dc56960d81e1d2.svg" src="../../_images/c44cf796d185fcc8a138a09d8ecd8a018b68f9e0baa56714d2dc56960d81e1d2.svg" /></div>
+</div>
+</section>
+<section id="savitzkygolay">
+<span id="id10"></span><h3>6.2.4 Savitzky–Golay<a class="headerlink" href="#savitzkygolay" title="Permalink to this heading">#</a></h3>
+<span class="target" id="index-9"></span><p id="index-10">Another approach is the <em>Savitzky–Golay</em> filter which incrementally moves along the noisy data and fits sections (i.e.., windows) of data points to a polynomial using least square minimization. While this approach had been previously described in the mathematical literature, Abraham Savitzky and M. J. E. Golay are known for applying it to spectroscopy (<a class="reference external" href="https://doi.org/10.1021/ac60214a047">https://doi.org/10.1021/ac60214a047</a>). Conveniently, SciPy contains a built-in function for this called <code class="docutils literal notranslate"><span class="pre">savgol_filter()</span></code> from the <code class="docutils literal notranslate"><span class="pre">scipy.signal</span></code> module shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">savgol_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">polyorder</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function requires three arguments which include the original data as a NumPy array, <code class="docutils literal notranslate"><span class="pre">window</span></code> which is the width of the moving window the savgol algorithm fits to a polynomial, and <code class="docutils literal notranslate"><span class="pre">polyorder</span></code> which is the order of <code class="docutils literal notranslate"><span class="pre">polynomial</span></code> used for the moving data fit. You are encouraged to experiment with the <code class="docutils literal notranslate"><span class="pre">window</span></code> and <code class="docutils literal notranslate"><span class="pre">polyorder</span></code> arguments to see what works the best for your application. However, <code class="docutils literal notranslate"><span class="pre">polyorder</span></code> must be less than the <code class="docutils literal notranslate"><span class="pre">window</span></code> size, and the <code class="docutils literal notranslate"><span class="pre">window</span></code> must be an odd integer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">savgol_filter</span>
+<span class="n">sg_smooth</span> <span class="o">=</span> <span class="n">savgol_filter</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">potent</span><span class="p">,</span> <span class="n">sg_smooth</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/68ef2eb4b9311bd87567d951aacbd46244118451b86e7933589dfd78e4f2dd09.svg" src="../../_images/68ef2eb4b9311bd87567d951aacbd46244118451b86e7933589dfd78e4f2dd09.svg" /></div>
+</div>
+<p>The Savitzky–Golay filter appears to have done a decent job removing the noise. Despite there being some remaining noise and other artifacts in the CV, the denoised CV makes it significantly easier to locate the maxima and minima in this example.</p>
+</section>
+</section>
+<section id="fourier-transforms">
+<span id="id11"></span><h2>6.3 Fourier Transforms<a class="headerlink" href="#fourier-transforms" title="Permalink to this heading">#</a></h2>
+<p id="index-11">Another approach to filtering noise is to filter based on frequency. Many times, random noise in data occurs at a different frequency than the data itself, and the noise can be reduced by filtering noise frequency ranges while maintaining signal frequencies. If the noise is higher frequency than the signal, it can be filtered out with what is known as a <em>low-pass</em> filter. Alternatively, filtering out low-frequency noise is known as a <em>high-pass</em> filter, and filtering out noise above and blow the signal frequency is known as a <em>band-pass</em> filter. Frequency filtering is somewhat involved being that we need to use window functions which are covered in the <a class="reference external" href="https://greenteapress.com/wp/think-dsp/">Think DSP</a> book by Allen Downey listed at the end of this chapter. Instead, we will just look at the distribution of signal and noise frequencies in synthetic data. This is useful for analyzing the noise in data and also is used routinely in nuclear magnetic resonance (NMR) spectroscopy and Fourier Transform infrared spectroscopy (FTIR).</p>
+<p>To convert the data from the time domain to the frequency domain, we will use the <em>fast Fourier transform (FFT)</em> algorithm. This algorithm is only for data that is periodic.  Below, synthetic data is generated oscillating at 62.0 Hz with some random noise to make it more interesting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="mf">62.0</span>  <span class="c1"># Hz</span>
+<span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">freq</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">signal</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">noise</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time, s&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1403d9fc92d2bce2604ed935e34c2d13184f4ba166e4d02837cc3f31bbba4ed1.svg" src="../../_images/1403d9fc92d2bce2604ed935e34c2d13184f4ba166e4d02837cc3f31bbba4ed1.svg" /></div>
+</div>
+<p>SciPy contains an entire module called <code class="docutils literal notranslate"><span class="pre">fft</span></code> dedicated to Fourier transforms and reverse Fourier transforms. We will use the basic <code class="docutils literal notranslate"><span class="pre">fft()</span></code> function for our synthetic data which returns a mixture of real and imaginary values. For plotting, we will simply look at the real component of the result using <code class="docutils literal notranslate"><span class="pre">.real</span></code>.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may see code around that performs Fourier transform using the <code class="docutils literal notranslate"><span class="pre">scipy.fftpack</span></code> module. The <code class="docutils literal notranslate"><span class="pre">fftpack</span></code> module is legacy code and should no longer be used.</p>
+</div>
+</aside>
+<div class="cell docutils container" id="index-12">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.fft</span> <span class="kn">import</span> <span class="n">fft</span>
+<span class="n">fdata</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fdata</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency, Hz&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9421c5a8c8ecb61c7cfaf54ac2381bd35c6c782c098eea9024b7981e982989a7.svg" src="../../_images/9421c5a8c8ecb61c7cfaf54ac2381bd35c6c782c098eea9024b7981e982989a7.svg" /></div>
+</div>
+<p>Only the first half of the Fourier transform output is plotted above because the second half is a mirror image of the first. A single peak at 62.0 Hz is present from our signal. The rest of the baseline of the plot is not smooth because there is noise present at a variety of frequencies. It is important to note that the erratic variations in the baseline of the frequency plot is not the noise itself but more like a histogram of all the frequencies present in the original data.</p>
+</section>
+<section id="fitting-interpolation">
+<span id="id12"></span><h2>6.4 Fitting &amp; Interpolation<a class="headerlink" href="#fitting-interpolation" title="Permalink to this heading">#</a></h2>
+<p>Signal data or information taken from signal data often conforms to linear, polynomial, or other mathematical trends, and fitting data is important because it allows scientists to determine the equation describing the physical or chemical behavior of the data. In <em>data fitting</em>, the user provides the data and the general class of equation expected, and the software returns the <em>coefficients</em> for the equation. <em>Interpolation</em> is the method of predicting values in regions among known data points. The calculation of values where no data was collected can be accomplished by either using the coefficients derived from a curve fit or using a special interpolation function that generates a callable function to calculate the new data points. Both approaches are demonstrated below.</p>
+<p>Before we can do our fitting, we need some new, noisy data to examine. A linear set of data with added noise is generated below along with a second-order curve with the noise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y_noisy</span> <span class="o">=</span> <span class="mf">2.2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">noise</span>
+<span class="n">y2_noisy</span> <span class="o">=</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">noise</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_noisy</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/657f6de813425f6f43ef0070a329946149121c1c61d93a2f9e5761c110e3c5d3.svg" src="../../_images/657f6de813425f6f43ef0070a329946149121c1c61d93a2f9e5761c110e3c5d3.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2_noisy</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/16e093cdba6117b899fb8e2fba2aa8f8bef14d65b8f907bfebdc68a662aff1b5.svg" src="../../_images/16e093cdba6117b899fb8e2fba2aa8f8bef14d65b8f907bfebdc68a662aff1b5.svg" /></div>
+</div>
+<section id="linear-regression">
+<span id="id13"></span><h3>6.4.1 Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this heading">#</a></h3>
+<p id="index-13">Now we can fit the noisy linear data with a line using the NumPy <code class="docutils literal notranslate"><span class="pre">np.polyfit(x,</span> <span class="pre">y,</span> <span class="pre">degree)</span></code> function. The function takes the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> data along with the <code class="docutils literal notranslate"><span class="pre">degree</span></code> of the polynomial.</p>
+<p>A line is a first-degree polynomial, and the function returns an array containing the coefficients for the fit with the highest order coefficients first. This is effectively a <em>linear regression</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_noisy</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.2406836984679646, 1.2799581449656945)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a linear equation of the form <span class="math notranslate nohighlight">\(y = ax + b\)</span>, we get an array of the form <code class="docutils literal notranslate"><span class="pre">array([a,</span> <span class="pre">b])</span></code>, so the fitted equation above is <span class="math notranslate nohighlight">\(y = 2.17x + 1.66\)</span>. The positive shift of the <span class="math notranslate nohighlight">\(y\)</span>-intercept above zero is not surprising being that we added random noise not centered around zero; the average of our <code class="docutils literal notranslate"><span class="pre">rng.random()</span></code> noise should be around 0.5, not zero. This could be remedied either by subtracting 0.5 from the noise or using another random number generator such as the normal distribution, such as <code class="docutils literal notranslate"><span class="pre">randn()</span></code>, which is centered around zero.</p>
+<p>We can view our linear regression by plotting a line on top of our data points using the coefficients found above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_reg</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_noisy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_reg</span><span class="p">,</span> <span class="s1">&#39;C1-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear regression&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7048f9556fd2137faf9daea75a8d9dacf8b285c715a71bc2d41044bfc2643fb7.svg" src="../../_images/7048f9556fd2137faf9daea75a8d9dacf8b285c715a71bc2d41044bfc2643fb7.svg" /></div>
+</div>
+<p>We can also obtain the statistics for our fit using the <code class="docutils literal notranslate"><span class="pre">linregress()</span></code> function from the SciPy <code class="docutils literal notranslate"><span class="pre">stats</span></code> module. Note that this does not return the <span class="math notranslate nohighlight">\(r^2\)</span> value but instead the <span class="math notranslate nohighlight">\(r\)</span>-value which can be squared to generate the <span class="math notranslate nohighlight">\(r^2\)</span> value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_noisy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=2.2406836984679654, intercept=1.2799581449656916, rvalue=0.9929311301807056, pvalue=1.5904112918209302e-92, stderr=0.027056369871974517, intercept_stderr=0.15660399723300503)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We are starting to see examples of functions that return multiple values which can be assigned to multiple variables using <a class="reference internal" href="../chapter_02/chap_02_notebook.html#id5"><span class="std std-ref">tuple unpacking</span></a> like below.</p>
+<div class="math notranslate nohighlight">
+\[ x, y = func(z) \]</div>
+<p>There may be times when you don’t need all of the returned values from a function. In these instances, it is common to use <code class="docutils literal notranslate"><span class="pre">__</span></code> (double underscore) as a junk variable which is broadly understood to store information that will never be used in the code. You may also see a <code class="docutils literal notranslate"><span class="pre">_</span></code> (single underscore) used for this purpose, but this is discouraged as a single underscore is also used by the Python interpreter to store the last ouput.</p>
+</div>
+</section>
+<section id="polynomial-fitting">
+<span id="id14"></span><h3>6.4.2 Polynomial Fitting<a class="headerlink" href="#polynomial-fitting" title="Permalink to this heading">#</a></h3>
+<p id="index-14">Fitting to a polynomial of a higher order works the same way except that the order is above one. You will need to already know the order of the polynomial, or you can make a guess and see how well a particular order fits the data. Below, the <code class="docutils literal notranslate"><span class="pre">np.polyfit()</span></code> function determines the second-order data can be fit by the equation <span class="math notranslate nohighlight">\(y = 3.40x^2 + 3.95x + 8.70\)</span>. We can again plot this fit equation over our data points to see how well the data agree with our equation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2_noisy</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.3949460261452056, 4.091223437015895, 8.196576084735119)
+</pre></div>
+</div>
+</div>
+</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See section <a class="reference internal" href="../chapter_14/chap_14_notebook.html#id6"><span class="std std-ref">14.2</span></a> for instuctions on fitting data to equatons other than linear or polynomial using <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> functions.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_fit</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2_noisy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;curve data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_fit</span><span class="p">,</span> <span class="s1">&#39;C1-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;curve fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/81b0569d95e199c781a85e92a06bfe66259fb7c56c3399a1a55096fdf66c1096.svg" src="../../_images/81b0569d95e199c781a85e92a06bfe66259fb7c56c3399a1a55096fdf66c1096.svg" /></div>
+</div>
+</section>
+<section id="interpolation">
+<span id="id15"></span><h3>6.4.3 Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this heading">#</a></h3>
+<p id="index-15">The practical difference between the <code class="docutils literal notranslate"><span class="pre">np.polyfit</span></code> function and the interpolation functions in SciPy is that the former returns coefficients for the equation while the interpolation functions return a Python function that can be used to calculate values. There are times when one is more desirable than the other depending upon your application. Below we will use the interpolation function to interpolate a one dimensional function.</p>
+<p>Below is a dampening sine wave that we will interpolate from ten data points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">x</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fa0df15b63c68c6cc70b7d1315205d0fe26b33a4f048a96688a97fdc7be5df0a.svg" src="../../_images/fa0df15b63c68c6cc70b7d1315205d0fe26b33a4f048a96688a97fdc7be5df0a.svg" /></div>
+</div>
+<p>To interpolate this one-dimensional function, we will use the <code class="docutils literal notranslate"><span class="pre">interp1d()</span></code> method from SciPy. Along with the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> values, <code class="docutils literal notranslate"><span class="pre">interp1d()</span></code> requires a mode of interpolation using the kind keyword which can include the items listed in Table 2.</p>
+<p><strong>Table 2</strong> Modes for <code class="docutils literal notranslate"><span class="pre">interp1d()</span></code> Method</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Kind</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">linear()</span></code></p></td>
+<td class="text-left"><p>Linear interpolation between data points</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">zero()</span></code></p></td>
+<td class="text-left"><p>Constant value until the next data point</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nearest()</span></code></p></td>
+<td class="text-left"><p>Predicts values equaling the closest data point</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">quadratic()</span></code></p></td>
+<td class="text-left"><p>Interpolates with a second-order spline</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">cubic()</span></code></p></td>
+<td class="text-left"><p>Interpolates with a third-order spline</p></td>
+</tr>
+</tbody>
+</table>
+<p>Below is a demonstration of both linear and cubic interpolation. The two functions <code class="docutils literal notranslate"><span class="pre">f()</span></code> and <code class="docutils literal notranslate"><span class="pre">f2()</span></code> are generated and can be used like any other Python function to calculate values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xnew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xnew</span><span class="p">),</span> <span class="s1">&#39;C1-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Linear Interpolation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">f2</span><span class="p">(</span><span class="n">xnew</span><span class="p">),</span> <span class="s1">&#39;C2--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Cubic Interpolation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b02d0c4da0993084c8ed37c975c4a3092deb8021af279a26df052a803b94373d.svg" src="../../_images/b02d0c4da0993084c8ed37c975c4a3092deb8021af279a26df052a803b94373d.svg" /></div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">#</a></h2>
+<p>The ultimate authority on NumPy and SciPy are the Numpy &amp; SciPy Documentation page listed below. As changes and improvements occur in these libraries, this is one of the best places to find information. For information on digital signal processing (DSP), there are numerous sources such as Allen Downey’s Think DSP book or articles such as those listed below.</p>
+<ol class="arabic simple">
+<li><p>Numpy and Scipy Documentation. <a class="reference external" href="https://docs.scipy.org/doc/">https://docs.scipy.org/doc/</a> (free resource)</p></li>
+<li><p>Downey, Allen B. Think DSP, Green Tea Press, 2016. <a class="reference external" href="https://docs.scipy.org/doc/">http://greenteapress.com/wp/think-dsp/</a> (free resource)</p></li>
+<li><p>O’Haver, T. C. An Introduction to Signal Processing in Chemical Measurement. <em>J. Chem. Educ.</em> <strong>1991,</strong> 68 (6), A147-A150. <a class="reference external" href="https://doi.org/10.1021/ed068pA147">https://doi.org/10.1021/ed068pA147</a></p></li>
+<li><p>Savitzky, A.; Golay, M.J.E. Smoothing and Differentiation of Data by Simplified Least Squares Procedures. <em>Anal. Chem.</em> <strong>1964,</strong> 36 (8) 1627–1639. <a class="reference external" href="https://doi.org/10.1021/ac60214a047">https://doi.org/10.1021/ac60214a047</a></p></li>
+</ol>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<p>Complete the following exercises in a Jupyter notebook. Any data file(s) refered to in the problems can be found in the <a class="reference external" href="https://github.com/weisscharlesj/SciCompforChemists/tree/master/notebooks">data</a> folder in the same directory as this chapter’s Jupyter notebook. Alternatively, you can download a zip file of the data for this chapter from <a class="reference external" href="https://github.com/weisscharlesj/data_SciCompforChem">here</a> by selecting the appropriate chapter file and then clicking the <strong>Download</strong> button.</p>
+<ol class="arabic">
+<li><p>Import the file <strong>CV_K3Fe(CN)6.csv</strong> which contains a cyclic voltammogram for potassium cyanoferrate. Plot the data with the green dots on the highest point(s) and red triangles on the lowest point(s).</p></li>
+<li><p>Import the file titled <strong>CV_K3Fe(CN)6.csv</strong> and determine the inflection points. Plot the data with a marker on both inflection points. Hint: There are two inflections points in these data with one running in the reverse direction making it have a negative slop.</p></li>
+<li><p>Generate noisy synthetic data from the following code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">sawtooth</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="n">sawtooth</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>a) Smooth the data using moving averages and plot the smoothed signal. Feel free to use the moving averages code from this chapter.</p>
+<p>b) Smooth the same data using a Savitzky–Golay filter. Plot the smoothed signal.</p>
+</li>
+<li><p>Import the <span class="math notranslate nohighlight">\(^{31}\)</span>P NMR file titled <strong>fid_31P.csv</strong> and determine the number of major frequencies are in this wave. Keep in mind that there will be a second echo for each peak.</p></li>
+<li><p>The wavelength of emitted light (<span class="math notranslate nohighlight">\(\lambda\)</span>) from hydrogen is related to the electron energy level transitions by the following equation where R<span class="math notranslate nohighlight">\(_\infty\)</span> is the Rydberg constant, n<span class="math notranslate nohighlight">\(_i\)</span> is the initial principle quantum number of the electron, and n<span class="math notranslate nohighlight">\(_f\)</span> is the final principle quantum number of the electron.</p>
+<div class="math notranslate nohighlight">
+\[ \frac{1}{\lambda} = R_\infty \left(\frac{1}{n_f^2} - \frac{1}{n_i^2} \right) \]</div>
+<p>The following is experimental data of the wavelengths for five different transitions from the  Balmer series (i.e., n<span class="math notranslate nohighlight">\(_f\)</span> = 2).</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Transition (<span class="math notranslate nohighlight">\(n_i\)</span> <span class="math notranslate nohighlight">\(\rightarrow\)</span> <span class="math notranslate nohighlight">\(n_f\)</span>)</p></th>
+<th class="head text-center"><p>Wavelength (nm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>3 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p></td>
+<td class="text-center"><p>656.1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>4 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p></td>
+<td class="text-center"><p>485.2</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>5 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p></td>
+<td class="text-center"><p>433.2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>6 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p></td>
+<td class="text-center"><p>409.1</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>7 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p></td>
+<td class="text-center"><p>396.4</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">wl</span> <span class="o">=</span> <span class="p">[</span><span class="mf">656.1</span><span class="p">,</span> <span class="mf">485.2</span><span class="p">,</span> <span class="mf">433.2</span><span class="p">,</span> <span class="mf">409.1</span><span class="p">,</span> <span class="mf">396.4</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Calculate a value for the Rydberg constant (R<span class="math notranslate nohighlight">\(_\infty\)</span>) using a linear fit of the above data. The data will need to be first linearized.</p>
+</li>
+<li><p>The following data is for the initial rate of a chemical reaction for different concentrations of starting material (A). Calculate a rate constant (k) for this reaction using a nonlinear fit.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Conc A (M)</p></th>
+<th class="head text-center"><p>Rate (M/s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>0.10</p></td>
+<td class="text-center"><p>0.0034</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.16</p></td>
+<td class="text-center"><p>0.0087</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.20</p></td>
+<td class="text-center"><p>0.014</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.25</p></td>
+<td class="text-center"><p>0.021</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.41</p></td>
+<td class="text-center"><p>0.057</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.55</p></td>
+<td class="text-center"><p>0.10</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conc</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">]</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0034</span><span class="p">,</span> <span class="mf">0.0087</span><span class="p">,</span> <span class="mf">0.0136</span><span class="p">,</span> <span class="mf">0.0213</span><span class="p">,</span> <span class="mf">0.0572</span><span class="p">,</span> <span class="mf">0.103</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>A colorimeter exhibits the following absorbances for known concentrations of Red 40 food dye. Generate a calibration curve using the data below and then calculate the concentration of Red 40 dye in a pink soft drink with an absorbance of 0.481.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Absorb.  (&#64; 504 nm)</p></th>
+<th class="head text-center"><p>Red 40 (10<span class="math notranslate nohighlight">\(^{-5}\)</span> M)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>0.125</p></td>
+<td class="text-center"><p>0.150</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.940</p></td>
+<td class="text-center"><p>1.13</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>2.36</p></td>
+<td class="text-center"><p>2.84</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>2.63</p></td>
+<td class="text-center"><p>3.16</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>3.31</p></td>
+<td class="text-center"><p>3.98</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>3.77</p></td>
+<td class="text-center"><p>4.53</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ab</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.940</span><span class="p">,</span> <span class="mf">2.36</span><span class="p">,</span> <span class="mf">2.63</span><span class="p">,</span> <span class="mf">3.31</span><span class="p">,</span> <span class="mf">3.77</span><span class="p">]</span>
+<span class="n">conc</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.150</span><span class="p">,</span> <span class="mf">1.13</span><span class="p">,</span> <span class="mf">2.84</span><span class="p">,</span> <span class="mf">3.16</span><span class="p">,</span> <span class="mf">3.98</span><span class="p">,</span> <span class="mf">4.53</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>The following are points on the 2s radial wave function (<span class="math notranslate nohighlight">\(\Psi\)</span>) for a hydrogen atom with respect to the radial distance from the nucleus in Bohrs (<span class="math notranslate nohighlight">\(a_0\)</span>). Visualize the radial wave function as a smooth curve by interpolating the following data points.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Radius (<span class="math notranslate nohighlight">\(a_0\)</span>)</p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(\Psi\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1.0</p></td>
+<td class="text-center"><p>0.21</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>5.0</p></td>
+<td class="text-center"><p>-0.087</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>9.0</p></td>
+<td class="text-center"><p>-0.027</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>13.0</p></td>
+<td class="text-center"><p>-0.0058</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>17.0</p></td>
+<td class="text-center"><p>-0.00108</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">radius</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">]</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.21</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.087</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.027</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0058</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00108</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>The file <strong>Cp2Fe_Mossbauer.txt</strong> contains Mossbauer data for a ferrocene complex where the left data column is velocity in millimeters per second and the right column is relative transmission. Using Python, determine the velecities of the six negative peaks. Plot the spectrum with dots on lowest point of each negative peak, and be sure to label your axes complete with units.</p></li>
+<li><p>Load the file <strong>XRF_Cu.csv</strong>, which contains X-ray fluorence (XRF) data for elemental copper, and use Python to determine the energy in eV of the two peaks. Notice that the <em>x</em>-axis is not in eV yet (see row 17 of data). You are advised to load the data using a pandas function, and setting a threshold will likely be neccesary.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/chapter_06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter_05/chap_05_notebook.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 5: Pandas</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../chapter_07/chap_07_notebook.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 7: Image Processing &amp; Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-detection">6.1 Feature Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-maxima-minima">6.1.1 Global Maxima &amp; Minima</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-maximums-minimums">6.1.2 Local Maximums &amp; Minimums</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slopes-inflection-points">6.1.3 Slopes &amp; Inflection Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing-data">6.2 Smoothing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unweighted-average">6.2.1 Unweighted Average</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-averages">6.2.2 Weighted Averages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-smoothing">6.2.3 Median Smoothing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#savitzkygolay">6.2.4 Savitzky–Golay</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-transforms">6.3 Fourier Transforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-interpolation">6.4 Fitting &amp; Interpolation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">6.4.1 Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-fitting">6.4.2 Polynomial Fitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation">6.4.3 Interpolation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Charles J. Weiss
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2017-2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Scientific Computing for Chemists with Python is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
