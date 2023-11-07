@@ -1,0 +1,1883 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Chapter 16: Bioinformatics with Biopython and Nglview (BETA) &#8212; Scientific Computing for Chemists with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/chapter_16/chap_16_notebook';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Index" href="../../genindex.html" />
+    <link rel="prev" title="Chapter 15: RDKit for Cheminformatics (BETA)" href="../chapter_15/chap_15_notebook.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../introduction/intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Scientific Computing for Chemists with Python - Home"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Scientific Computing for Chemists with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../introduction/intro.html">
+                    Scientific Computing for Chemists with Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_00/chap_00_notebook.html">Chapter 0: Python &amp; Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_01/chap_01_notebook.html">Chapter 1: Basic Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_02/chap_02_notebook.html">Chapter 2: Intermediate Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_03/chap_03_notebook.html">Chapter 3: Plotting with Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_04/chap_04_notebook.html">Chapter 4: NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_05/chap_05_notebook.html">Chapter 5: Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_06/chap_06_notebook.html">Chapter 6: Signal &amp; Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_07/chap_07_notebook.html">Chapter 7: Image Processing &amp; Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_08/chap_08_notebook.html">Chapter 8: Mathematics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_09/chap_09_notebook.html">Chapter 9: Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_10/chap_10_notebook.html">Chapter 10: Plotting with Seaborn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_11/chap_11_notebook.html">Chapter 11: Nuclear Magnetic Resonance with NMRglue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_12/chap_12_notebook.html">Chapter 12: Machine Learning using Scikit-Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_13/chap_13_notebook.html">Chapter 13: Command Line &amp; Spyder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_14/chap_14_notebook.html">Chapter 14: Optimization and Root Finding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_15/chap_15_notebook.html">Chapter 15: RDKit for Cheminformatics <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 16: Bioinformatics with Biopython and Nglview <font color="C51E3A"> (BETA) </font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/weisscharlesj/SciCompforChemists/issues/new?title=Issue%20on%20page%20%2Fnotebooks/chapter_16/chap_16_notebook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/chapter_16/chap_16_notebook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 16: Bioinformatics with Biopython and Nglview <font color = C51E3A> (BETA) </font></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-sequences">16.1 Working with Sequences</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-fasta-files-with-biopython">16.1.1 Reading FASTA Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gc-content-of-nucleotide-sequence">16.1.2 GC Content of Nucleotide Sequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nucleic-acids-transcription-translation-and-replication">16.1.3 Nucleic Acids - Transcription, Translation, and Replication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-alignment">16.1.4 Sequence Alignment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-information">16.2 Structural Information</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-pdb-files-with-python">16.2.1 Reading PDB Files with Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-structural-files-with-biopython">16.2.2 Reading Structural Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-files-with-biopython">16.2.3 Writing Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-strands-residues-and-atoms">16.2.4 Accessing Strands, Residues, and Atoms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes-of-residues-and-atoms">16.2.5 Attributes of Residues, and Atoms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ramachandran-plots">16.2.6 Ramachandran Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-molecules">16.3 Visualization of Molecules</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-structures-in-nglview">16.3.1 Loading Structures in Nglview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nglview-representations">16.3.2 Nglview Representations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-surfaces">16.3.3 Showing Surfaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-16-bioinformatics-with-biopython-and-nglview-font-color-c51e3a-beta-font">
+<span id="id1"></span><h1>Chapter 16: Bioinformatics with Biopython and Nglview <font color = C51E3A> (BETA) </font><a class="headerlink" href="#chapter-16-bioinformatics-with-biopython-and-nglview-font-color-c51e3a-beta-font" title="Permalink to this heading">#</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This chapter is still being worked on and proof read for errors. Errors may still exist, and major changes may occur.</p>
+</div>
+<p id="index-0">Bioinformatics is the field of working with biological or biochemical data using computing resources, and while the underlying techniques for working with biological data is fundamentally the same as what has been seen so far, this field is large and significant enough to warrant its own chapter. More importantly, bioinformatics contains a multitude of specialized file formats making this a significant hurdle in working with these data. The good news is that biological/biochemical file formats are usually text files like seen in the previous chapters, and there are Python libraries available to facilitate the parsing and working with these file formats and data. This chapter focuses on a few common file formats, parsing them with both our own Python code and using the Biopython library to perform the heavy lifting.</p>
+<p>The Biopython library is among the well-known Python libraries for working with biological and biochemical data. It will need to be installed in Jupyter or Google Colab as it is not a default library. As of this writing, it can be installed <a class="reference external" href="https://biopython.org/wiki/Download">using pip</a> by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">biopython</span></code>. Once installed, it is imported as <code class="docutils literal notranslate"><span class="pre">Bio</span></code>. This chapter assums the following imports.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">Bio</span>
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">PDB</span><span class="p">,</span> <span class="n">SeqIO</span><span class="p">,</span> <span class="n">SeqUtils</span><span class="p">,</span> <span class="n">Align</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">BiopythonWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">BiopythonWarning</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="working-with-sequences">
+<span id="id2"></span><h2>16.1 Working with Sequences<a class="headerlink" href="#working-with-sequences" title="Permalink to this heading">#</a></h2>
+<p>Among the most fundamental data in bioinformatics are sequences which simply provide the order of monomers in a sequence of nucleotides or amino acids. For protein sequences, these monomers are mainly the 20 common amino acids with other less frequent amino acids and other species possible, and for nucleic acid sequences, the monomers are nucleotides.  In this section, we will work with sequences inside Biopython to performing various operations such as sequence alignment and translating mRNA sequences into peptide sequences.</p>
+<p>Inside Biopython, sequences are often stored as a Sequence object which looks like a string inside a list wrapped in <code class="docutils literal notranslate"><span class="pre">Seq()</span></code> such as below. This object contains many of the same methods as a Python string plus some extra, so you can still iterate through Sequence objects with a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop along with index, slice, reverse them, and alter the case like a string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Seq</span><span class="p">[</span><span class="s1">&#39;GCCGGCAGTCACACGCACAGGC&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<section id="reading-fasta-files-with-biopython">
+<span id="id3"></span><h3>16.1.1 Reading FASTA Files with Biopython<a class="headerlink" href="#reading-fasta-files-with-biopython" title="Permalink to this heading">#</a></h3>
+<p>There are numerous file formats that can store sequence data, but for the examples in this section, we will focus on the FASTA file format which only holds the sequence data and a small amount metadata (i.e., data about the data). FASTA files are text files that look like the following when opened in a text editor. A FASTA file can contain a single or multiple sequence entries with the first line of each entry beginning with a <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>. The rest of this line includes helpful information about the sequence such as the organism and what specific molecule it relates to. The rest of the text block is sequence information. There is no strict rule on how many letters can be contained in each line, but 70 is a common length.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the FASTA lines may not look the same length as shown here, they will be the same width when opened in a monospaced font.</p>
+</div>
+</aside>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;\&gt;7AIZ_1|Chains</span> <span class="pre">A,</span> <span class="pre">D|Nitrogenase</span> <span class="pre">vanadium-iron</span> <span class="pre">protein</span> <span class="pre">alpha</span> <span class="pre">chain|Azotobacter</span> <span class="pre">vinelandii</span> <span class="pre">(354)</span> <span class="pre">MPMVLLECDKDIPERQKHIYLKAPNEDTREFLPIANAATIPGTLSERGCAFCGAKLVIGGVLKDTIQMIH</span> <span class="pre">MPMVLLECDKDIPERQKHIYLKAPNEDTREFLPIANAATIPGTLSERGCAFCGAKLVIGGVLKDTIQMIH</span> <span class="pre">GPLGCAYDTWHTKRYPTDNGHFNMKYVWSTDMKESHVVFGGEKRLEKSMHEAFDEMPDIKRMIVYTTCPT</span> <span class="pre">ALIGDDIKAVAKKVMKDRPDVDVFTVECPGFSGVSQSKGHHVLNIGWINEKVETMEKEITSEYTMNFIGD</span> <span class="pre">FNIQGDTQLLQTYWDRLGIQVVAHFTGNGTYDDLRCMHQAQLNVVNCARSSGYIANELKKRYGIPRLDID</span> <span class="pre">SWGFNYMAEGIRKICAFFGIEEKGEELIAEEYAKWKPKLDWYKERLQGKKMAIWTGGPRLWHWTKSVEDD</span> <span class="pre">LGVQVVAMSSKFGHEEDFEKVIARGKEGTYYIDDGNELEFFEIIDLVKPDVIFTGPRVGELVKKLHIPYV</span> <span class="pre">NGHGYHNGPYMGFEGFVNLARDMYNAVHNPLRHLAAVDIRDKSQTTPVIVRGAA</span></code></p>
+<p>In the following example, we will load a FASTA file containing Norway rat RNA using the <code class="docutils literal notranslate"><span class="pre">SeqIO.read()</span></code> and  <code class="docutils literal notranslate"><span class="pre">SeqIO.parse()</span></code> functions which are simiarl except that <code class="docutils literal notranslate"><span class="pre">SeqIO.read()</span></code> can only load FASTA files with a single entry while <code class="docutils literal notranslate"><span class="pre">SeqIO.parse()</span></code> can open files with single or multiple entries. Both will be demonstrated below, and both require two positional arguments - the file or file path as a string and the file type as a string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SeqIO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="s1">&#39;file_type&#39;</span><span class="p">)</span>
+<span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="s1">&#39;file_type&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rat</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;data/rcsb_pdb_430D.fasta&#39;</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">)</span>
+<span class="n">rat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SeqRecord(seq=Seq(&#39;GGGUGCUCAGUACGAGAGGAACCGCACCC&#39;), id=&#39;430D_1|Chain&#39;, name=&#39;430D_1|Chain&#39;, description=&#39;430D_1|Chain A|SARCIN/RICIN LOOP FROM RAT 28S R-RNA|Rattus norvegicus (10116)&#39;, dbxrefs=[])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">SeqIO.read()</span></code> function returns a Sequence Recored object which has a few attributes shown in the table below. The most important attribute is the sequence itself which is stored as a Sequence object.</p>
+<p><strong>Table 1</strong> Sequence Record Attributes</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Attribute</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>Returns the sequence ID from the file’s first line</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>Returns a description from the file’s first line</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">seq</span></code></p></td>
+<td><p>Returns the sequence as a Sequence object</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Returns the sequence name from the file’s first line (may be same as ID)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rat</span><span class="o">.</span><span class="n">seq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GGGUGCUCAGUACGAGAGGAACCGCACCC&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rat</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;data/rcsb_pdb_430D.fasta&#39;</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">)</span>
+<span class="n">rat</span><span class="o">.</span><span class="n">seq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GGGUGCUCAGUACGAGAGGAACCGCACCC&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the event we have a file containing multiple entries, the  <code class="docutils literal notranslate"><span class="pre">SeqIO.parse()</span></code> function is required. The function works the same way as the <code class="docutils literal notranslate"><span class="pre">SeqIO.read()</span></code> version except that a one-time use iterator object is returned that contains each entry from the FASTA file. To extract this information, we need to iterate over it using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop. Data from each entry can be accessed using the same methods as the <code class="docutils literal notranslate"><span class="pre">SeqIO.read()</span></code> function. This is demonstrated below using a FASTA file for a protein structure of <a class="reference external" href="https://www.rcsb.org/structure/3DHT">Norwegian rat hemoglobin</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fasta_data</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;data/rcsb_pdb_3DHT.fasta&#39;</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">)</span>
+
+<span class="n">seq_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">fasta_data</span><span class="p">:</span>
+    <span class="n">seq_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+
+<span class="n">seq_list</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Seq(&#39;VLSADDKTNIKNCWGKIGGHGGEYGEEALQRMFAAFPTTKTYFSHIDVSPGSAQ...KYR&#39;),
+ Seq(&#39;VHLTDAEKAAVNGLWGKVNPDDVGGEALGRLLVVYPWTQRYFDSFGDLSSASAI...KYH&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because the iterator is a one-time use object, attempting to iterate over it again, like below, fails to return any data, so be sure to attach any data to a variable or append it to a list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">fasta_data</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="gc-content-of-nucleotide-sequence">
+<span id="id4"></span><h3>16.1.2 GC Content of Nucleotide Sequence<a class="headerlink" href="#gc-content-of-nucleotide-sequence" title="Permalink to this heading">#</a></h3>
+<p id="index-1">One piece of information we can extract from a nucleotide sequence is the GC content. In DNA for example, there are two complementary strands hydrogen bonded together which contain the base pairs adenosine(A)/thymine(T) and guanidine(G)/cytosine(C), so the number of adenosines equals the number of thymines and the number of guanines equals the number of cytosines. However, the number of A/T pairs does not necessarily equal the number of G/C pairs. The <em>GC content</em> of DNA is the fraction of total bases that are G/C which can be calculated using the number (<span class="math notranslate nohighlight">\(n\)</span>) of G and C bases divided by the total number of all bases in the sequence.</p>
+<div class="math notranslate nohighlight">
+\[ GC \,\, content = \frac{GC\,\, bases}{sequence \,\,length} = \frac{n_G + n_C}{n_G + n_C + n_A + n_T}  \]</div>
+<p>Below, we will calculate the GC content of a DNA sequence in a FASTA file using Biopython’s <code class="docutils literal notranslate"><span class="pre">gc_fraction(seq)</span></code> function which accepts a Biopython sequence and returns the GC content in fraction form.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DNA</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;data/DNA_sequence_drago.fasta&#39;</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">)</span>
+<span class="n">rat_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">seq</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">]</span>
+
+<span class="n">SeqUtils</span><span class="o">.</span><span class="n">gc_fraction</span><span class="p">(</span><span class="o">*</span><span class="n">rat_seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">DNA</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;data/DNA_sequence_drago.fasta&#39;</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">rat_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">seq</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">SeqUtils</span><span class="o">.</span><span class="n">gc_fraction</span><span class="p">(</span><span class="o">*</span><span class="n">rat_seq</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: module &#39;Bio.SeqUtils&#39; has no attribute &#39;gc_fraction&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sometimes there are characters in a DNA sequence other than A, T, C, and G due to ambiguities among other reasons. An N means that the base is unidentifiable while S means it is either C or G and W means it is either A or T. The <code class="docutils literal notranslate"><span class="pre">gc_fraction()</span></code> function provides an <code class="docutils literal notranslate"><span class="pre">ambiguous=</span></code> parameter that can be used to decide how to deal with ambiguous characters. Below are the three string options for the <code class="docutils literal notranslate"><span class="pre">ambiguous=</span></code> parameter where <code class="docutils literal notranslate"><span class="pre">remove</span></code> is the default setting.</p>
+<p><strong>Table 2</strong> Settings for <code class="docutils literal notranslate"><span class="pre">gc_fraction()</span></code> <code class="docutils literal notranslate"><span class="pre">ambiguous=</span></code> Parameter</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Options</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">'remove'</span></code></p></td>
+<td><p>Default setting; only uses ‘ATCGSW’ characters and ignores the rest</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">'ignore'</span></code></p></td>
+<td><p>Uses ‘GCS’ characters for GC count and rest of characters for sequence length</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">'weighted'</span></code></p></td>
+<td><p>Applies weights to various characters effectively forming a weighted average</p></td>
+</tr>
+</tbody>
+</table>
+<p>Our sequence contains some <code class="docutils literal notranslate"><span class="pre">N</span></code> characters, so if we set it to <code class="docutils literal notranslate"><span class="pre">ignore</span></code>, the GC content value is expected to decrease due to a larger denominator in the equation above versus the default <code class="docutils literal notranslate"><span class="pre">remove</span></code> option.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SeqUtils</span><span class="o">.</span><span class="n">gc_fraction</span><span class="p">(</span><span class="o">*</span><span class="n">rat_seq</span><span class="p">,</span> <span class="n">ambiguous</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5247058823529411
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="nucleic-acids-transcription-translation-and-replication">
+<span id="id5"></span><h3>16.1.3 Nucleic Acids - Transcription, Translation, and Replication<a class="headerlink" href="#nucleic-acids-transcription-translation-and-replication" title="Permalink to this heading">#</a></h3>
+<p>In protein synthesis, the coding (or informational) strand of DNA is transcribed to mRNA which is then translated to a protein sequence. DNA can also replicate by unwinding and using additional complementary bases to bond the coding and template strands. Biopython makes performing digital analogue of these operations relatively simple using the following functions.</p>
+<p><strong>Table 3</strong> Methods for Performing Transcription, Translation, and Replication</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Function</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code></p></td>
+<td><p>Transcribes coding DNA strand to mRNA (maintains 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ direction)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">translate()</span></code></p></td>
+<td><p>Translates mRNA sequence (5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’) to a peptide sequence</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">complement()</span></code></p></td>
+<td><p>Converts 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ to 3’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 5’ complementary sequence</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">reverse_complement()</span></code></p></td>
+<td><p>Converts 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ DNA strand to 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ complementary sequence</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">reverse_complement_rna()</span></code></p></td>
+<td><p>Converts 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ RNA strand to 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ complementary sequence</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">complement_rna()</span></code></p></td>
+<td><p>Converts 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ RNA strand to 3’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 5’ complementary sequence</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">replace(old,</span> <span class="pre">new)</span></code></p></td>
+<td><p>Replaces <code class="docutils literal notranslate"><span class="pre">old</span></code> items in sequence with <code class="docutils literal notranslate"><span class="pre">new</span></code> (can also be used to replace spaces)</p></td>
+</tr>
+</tbody>
+</table>
+<p>While some functions in Biopython accept strings or Sequence objects, the functions above work exclusively with Sequence objects. The good news is that if you have a string, it is easy to convert to a Sequence object using the <code class="docutils literal notranslate"><span class="pre">Seq()</span></code> function like below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coding_DNA</span> <span class="o">=</span> <span class="n">Bio</span><span class="o">.</span><span class="n">Seq</span><span class="o">.</span><span class="n">Seq</span><span class="p">(</span><span class="s1">&#39;GGAGAGTGACGCCGGCAGTCACACGCACAGGCTGCAGCAACGAAAGAT&#39;</span><span class="p">)</span>
+<span class="n">coding_DNA</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GGAGAGTGACGCCGGCAGTCACACGCACAGGCTGCAGCAACGAAAGAT&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can perform transcription using the <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> method which operates on a DNA strand and assumes that the DNA strand is the coding (or informational) strand. It also assumes that the sequence is in the 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ direction and returns the mRNA sequence also in the 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ direction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mRNA</span> <span class="o">=</span> <span class="n">coding_DNA</span><span class="o">.</span><span class="n">transcribe</span><span class="p">()</span>
+<span class="n">mRNA</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GGAGAGUGACGCCGGCAGUCACACGCACAGGCUGCAGCAACGAAAGAU&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you find yourself with the template strand, this can be converted to the coding strand using the <code class="docutils literal notranslate"><span class="pre">reverse_complement()</span></code> function like below which takes a DNA strand in the 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ direction and returns the complementary strand also in the 5’ <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3’ direction. This coding strand can then be transcribed to mRNA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">template_DNA</span> <span class="o">=</span> <span class="n">Bio</span><span class="o">.</span><span class="n">Seq</span><span class="o">.</span><span class="n">Seq</span><span class="p">(</span><span class="s1">&#39;ATCTTTCGTTGCTGCAGCCTGTGCGTGTGACTGCCGGCGTCACTCTCC&#39;</span><span class="p">)</span>
+<span class="n">coding_DNA</span> <span class="o">=</span> <span class="n">template_DNA</span><span class="o">.</span><span class="n">reverse_complement</span><span class="p">()</span>
+<span class="n">coding_DNA</span><span class="o">.</span><span class="n">transcribe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GGAGAGUGACGCCGGCAGUCACACGCACAGGCUGCAGCAACGAAAGAU&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have our mRNA sequence, we can translate it to a peptide sequence using the <code class="docutils literal notranslate"><span class="pre">translate()</span></code> method which is performed using the standard codon table.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The asterisk in a peptide sequence represents a stop codon.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mRNA</span><span class="o">.</span><span class="n">translate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GE*RRQSHAQAAATKD&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Be default, this function will translate the entire mRNA sequence disregarding any stop codons. To heed the stop codons, set the <code class="docutils literal notranslate"><span class="pre">to_stop=</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mRNA</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">to_stop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Seq(&#39;GE&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sequence-alignment">
+<span id="id6"></span><h3>16.1.4 Sequence Alignment<a class="headerlink" href="#sequence-alignment" title="Permalink to this heading">#</a></h3>
+<p id="index-2">Biopython can perform both global and local pairwise alignments of sequences including nucleic acids and proteins. The difference between these types of alignments is that <em>global pairwise alignment</em> attempts to align the entirety of two sequences of at least somewhat similar length while <em>local pairwise alignment</em> attempts to align subsequences of the two sequences. Local alignment essentially attempts to find common regions between multiple sequences. The alignment processes generates a score based on user-defined rules and attempts to maximize this score to generate the “best” alignment. For example, aligned bases in two DNA sequences might be awarded a +1 while misaligned bases are penalized a -1.</p>
+<p>Pairwise sequence alignment in Biopython starts with creating a PairwiseAligner object which requires the type of alignment (<code class="docutils literal notranslate"><span class="pre">'global'</span></code> or <code class="docutils literal notranslate"><span class="pre">'local'</span></code>). Optionally, you can set the scoring parameters which dictate how a match, mismatch, starting a gap, extending a gap, and ending a gap affect the score. By default, +1 is awarded for every match and mismatches and gaps are all 0. Below, the PairwiseAligner is set to <code class="docutils literal notranslate"><span class="pre">'global'</span></code> and scoring parameters are adjusted as shown.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aligner</span> <span class="o">=</span> <span class="n">Align</span><span class="o">.</span><span class="n">PairwiseAligner</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
+                                <span class="n">match_score</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">mismatch_score</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">open_gap_score</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">extend_gap_score</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have created the PairwiseAligner object, we can use the <code class="docutils literal notranslate"><span class="pre">align()</span></code> method to return the optimal alignment between the two sequences based on the scoring parameters. It is important to note that there can be multiple optimal sequence alignments (i.e., tied for best score) based on our scoring parameters, so the <code class="docutils literal notranslate"><span class="pre">align()</span></code> method can return multiple alignments.</p>
+<p>Below, the aligned sequences are stored in the variable <code class="docutils literal notranslate"><span class="pre">alignment</span></code>. When we check the length of this object, we find it contains 15 alignments which can be viewed by indexing or iteration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq1</span> <span class="o">=</span> <span class="s1">&#39;GGAGAGTGACGCCGGCAGTCACACGCACAGGCTGCAGCAACGAAAAGTT&#39;</span>
+<span class="n">seq2</span> <span class="o">=</span> <span class="s1">&#39;GGAGAGTGACGCCGGGCAGTCACACGCTCAGGCTGCAGCAACGAAAAAGTTA&#39;</span>
+
+<span class="n">alignments</span> <span class="o">=</span> <span class="n">aligner</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">alignments</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">alignments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>target            0 GGAGAGTGACGCC-GGCAGTCACACGCACAGGCTGCAGCAACG-AAAAGTT- 49
+                  0 |||||||||||||-|||||||||||||.|||||||||||||||-|||||||- 52
+query             0 GGAGAGTGACGCCGGGCAGTCACACGCTCAGGCTGCAGCAACGAAAAAGTTA 52
+</pre></div>
+</div>
+</div>
+</div>
+<p>The score from the optimal alignments can be viewed using the <code class="docutils literal notranslate"><span class="pre">score</span></code> method. Keep in mind the score is affected by not only the quality of the alignment based on the alignment parameters but also sequence length, so it is not necessarily useful for comparing alignments between different pairs of sequences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">score</span> <span class="o">=</span> <span class="n">aligner</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">)</span>
+<span class="n">score</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>44.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="structural-information">
+<span id="id7"></span><h2>16.2 Structural Information<a class="headerlink" href="#structural-information" title="Permalink to this heading">#</a></h2>
+<p>In this section, we will work with two common file formats for storing biochemical data: PDB and mmCIF. Both of these file formats are text files, so information can always be extracted using pure Python code you wrote yourself. However, there are also preexisting tools that can make this process substantially easier such as Biopython or scikit-bio (see <a class="reference internal" href="#fr16"><span class="std std-ref">Further Reading</span></a>). Below you will see demonstrations of both pure Python and Biopython approaches with an emphasis on using Biopython.</p>
+<p>Protein Database (PDB) and Macromolecular Crystallographic Information File (mmCIF) files are designed to hold protein sequence and structural information while the <a class="reference internal" href="#id3"><span class="std std-ref">FASTA file format</span></a> only holds sequence data for proteins and nucleic acids. The FASTA file format is simpler than the PDB and mmCIF file formats, but there is significant amounts of structural data, addressed below, contained in the latter formats that go beyond the sequence.</p>
+<section id="reading-pdb-files-with-python">
+<span id="id8"></span><h3>16.2.1 Reading PDB Files with Python<a class="headerlink" href="#reading-pdb-files-with-python" title="Permalink to this heading">#</a></h3>
+<p>The PDB file format is a classic file format for holding protein sequence and structual information including the information listed below. While the PDB is being slowly replaced by the mmCIF (see <a class="reference internal" href="#id9"><span class="std std-ref">section 16.2.2</span></a>), the PDB file format is still quite common and worth looking at.</p>
+<ul class="simple">
+<li><p>Amino acid sequence of each strand</p></li>
+<li><p>Location and identity of non-amino acid species</p></li>
+<li><p><em>xyz</em> coordinates of atoms in the crystal structure including trapped solvents</p></li>
+<li><p>Connectivity information</p></li>
+<li><p>Metadata about the protein (e.g., source organism, resolution, etc.)</p></li>
+<li><p>Secondary structural information</p></li>
+</ul>
+<p>First, we need a PDB file of a protein structure which can be downloaded for free from the <a class="reference external" href="https://www.rcsb.org/">RCSB Protein Data Bank</a>.  The <strong>Download Files</strong> menu on the top right provides a number of file format options including <strong>PDB Format</strong>. In the example below, we will look at the <a class="reference external" href="https://www.rcsb.org/structure/7AIZ">Vanadium nitrogenase VFe protein structure</a> in the <strong>7aiz.pdb</strong> file.</p>
+<p>The PDB file is organized where each line holds a different type of information, and a label in all caps on the far left of each line indicates what type of information is stored in that line. Below are some key labels (i.e., record type), but this is far from a comprehensive list. Data within a line is identifiable based on the character <em>position</em> in a line. This is in contrast to many other file types where data in a single line are distinguished by seperators such as commas or spaces. For more information on the PDB file format, see the <a class="reference external" href="https://www.wwpdb.org/documentation/file-format">Protein Data Bank website</a>. If you are using JupyterLab, you can double click the PDB file to open it and view the contents.</p>
+<p><strong>Table 4</strong> Selected PDB File Record Types</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Record Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>HEADER</p></td>
+<td><p>Name of protein and date</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>TITLE</p></td>
+<td><p>Name of molecule</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>COMPND</p></td>
+<td><p>Information about the compound</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>SOURCE</p></td>
+<td><p>Information about the source of the protein (e.g., source organism)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>SEQRES</p></td>
+<td><p>Amino acid sequence and strand identity</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>HET, HETNAM</p></td>
+<td><p>Information about non-amino acids in protein structure</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>HELIX</p></td>
+<td><p>Information about helicies including type, start and end amino acids, etc.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>SHEET</p></td>
+<td><p>Information about sheets including start and end amino acids and sense</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>ATOM</p></td>
+<td><p>Information about atoms in structure inclidng <em>xyz</em> coordinates, identity, amino acid, etc.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>SSBOND</p></td>
+<td><p>Identifies cysteins involved in each disulfide bond</p></td>
+</tr>
+</tbody>
+</table>
+<p>Before we rely on Biopython to extract information from data files, we will use pure Python. As a short demonstration, the code below opens the PDB file and appends each line to a list called <code class="docutils literal notranslate"><span class="pre">data</span></code>. We can examine a few of the lines using slicing to see information about the structure of the protein. The lines shown below provide information about the helicies and sheets in the protein structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;data/7aiz.pdb&#39;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">1190</span><span class="p">:</span><span class="mi">1200</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;HELIX  109 AM1 ARG F   24  THR F   44  1                                  21    \n&#39;,
+ &#39;HELIX  110 AM2 THR F   52  PHE F   73  1                                  22    \n&#39;,
+ &#39;HELIX  111 AM3 PRO F   74  GLN F   78  5                                   5    \n&#39;,
+ &#39;HELIX  112 AM4 ASN F   80  ILE F  100  1                                  21    \n&#39;,
+ &#39;SHEET    1 AA1 6 ILE A  19  LEU A  21  0                                        \n&#39;,
+ &#39;SHEET    2 AA1 6 TYR A 380  ASP A 383 -1  O  TYR A 381   N  TYR A  20           \n&#39;,
+ &#39;SHEET    3 AA1 6 GLN A 354  SER A 360  1  N  MET A 358   O  TYR A 380           \n&#39;,
+ &#39;SHEET    4 AA1 6 LYS A 330  THR A 335  1  N  MET A 331   O  GLN A 354           \n&#39;,
+ &#39;SHEET    5 AA1 6 VAL A 401  THR A 404  1  O  PHE A 403   N  ALA A 332           \n&#39;,
+ &#39;SHEET    6 AA1 6 TYR A 419  ASN A 421  1  O  VAL A 420   N  ILE A 402           \n&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>As an exercise, we can extract information about the <span class="math notranslate nohighlight">\(\beta\)</span>-sheets in the protein. Specifically, we will look at the relative directions (sense) of adjacent strands which can run in the same direction (parallel) or in the opposite directions (antiparallel). This is indicated by the integer in positions 39-40 of a SHEET line and can be either 0 for the first strand of a <span class="math notranslate nohighlight">\(\beta\)</span>-sheet, 1 for a strand parallel with the previous strand, and -1 for a strand antiparallel with the previous strand. The function below extracts this information by opening the PDB <code class="docutils literal notranslate"><span class="pre">file</span></code>, moving through each line of the file, and if the line begins with <code class="docutils literal notranslate"><span class="pre">SHEET</span></code>, it appends the relative direction to a list and returns the populated list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_sheet_direction</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Accepts a PDB files path (string) and returns a list</span>
+<span class="sd">    of values indicating if a strand starts a beta sheet (0),</span>
+<span class="sd">    strand is parallel to the previous strand (1), or is</span>
+<span class="sd">    antiparallel to the previous strand (-1).</span>
+<span class="sd">    </span>
+<span class="sd">     &gt;&gt;&gt; (&#39;1abc.pdb&#39;) -&gt; [0, 1, 1, 1, -1]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">structure_list</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;SHEET&#39;</span><span class="p">):</span>
+                <span class="n">sense</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">38</span><span class="p">:</span><span class="mi">40</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">structure_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sense</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">structure_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sheet_sense</span> <span class="o">=</span> <span class="n">get_sheet_direction</span><span class="p">(</span><span class="s1">&#39;data/7aiz.pdb&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sheet_sense</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, -1, 1, 1, 1, 1, 0, 1, 1, 1, -1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, -1, 1, 1, 1, 1, 0, 1, 1, 1, -1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">sheet_sense</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sheet Sense&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Count&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/aeed6c338d3ee14ef7604a8e1839dc1fa54dbc968b36d39a92367ccc798e5446.svg" src="../../_images/aeed6c338d3ee14ef7604a8e1839dc1fa54dbc968b36d39a92367ccc798e5446.svg" /></div>
+</div>
+<p>According to the graph above, parallel <span class="math notranslate nohighlight">\(\beta\)</span>-sheet strands are significantly more prevalent in this protein structure than antiparallel strands. This might be different for other proteins, so we will expand this analysis to a folder full of protein structures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s1">&#39;data/proteins&#39;</span><span class="p">)</span>
+
+<span class="n">sheet_sense</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;data/proteins&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;pdb&#39;</span><span class="p">):</span>
+        <span class="n">sheet_sense</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_sheet_direction</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span><span class="n">file</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">sheet_sense</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sheet Sense&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Count&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/105598f4d5db7ddbb0a39bcb78bf19abf9c0dddb8b881390adf8381701df6123.svg" src="../../_images/105598f4d5db7ddbb0a39bcb78bf19abf9c0dddb8b881390adf8381701df6123.svg" /></div>
+</div>
+<p>The trend over a larger sample of proteins is that antiparallel is significantly more common than parallel, so it seems that the 7aiz protein structure is an exception to the typical trend. However, this is only little over a dozen structures, so it would require a much larger data set to be certain of this trend.</p>
+</section>
+<section id="reading-structural-files-with-biopython">
+<span id="id9"></span><h3>16.2.2 Reading Structural Files with Biopython<a class="headerlink" href="#reading-structural-files-with-biopython" title="Permalink to this heading">#</a></h3>
+<span class="target" id="index-3"></span><p id="index-4">Next, we will use the Biopython library to read data from PDB and other structural files. One of the appeals of using Biopython is that the user does not need to understand the strucutre of the file format; Biopython parses the files allowing you to focus on higher-level concerns.</p>
+<p>First, we need to import the <code class="docutils literal notranslate"><span class="pre">PDB</span></code> module of the Biopython library with the <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">Bio.PDB</span></code> command if you have not done so already (see <a class="reference internal" href="#id1"><span class="std std-ref">start of this chapter</span></a>). Biopython, like SciPy, requires that individual modules be imported one at a time instead of the entire library (i.e., <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">Bio</span></code> is not enough). You are welcome to import functions individually (e.g., <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">Bio.PDB</span> <span class="pre">import</span> <span class="pre">PDBParser()</span></code>), but herein we will only import the module using <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">Bio.PDB</span></code> so that the code more clearly shows the source of every function. The <code class="docutils literal notranslate"><span class="pre">PDB</span></code> module provides tools for dealing with the 3D structural data of macromolecules such as proteins and DNA. To parse a PDB file, we first create a parser object using the <code class="docutils literal notranslate"><span class="pre">Bio.PDB.PDBParser()</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">PDBParser</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will then use the <code class="docutils literal notranslate"><span class="pre">get_structure()</span></code> function to read in data from a file. This function requires two positional arguments - a name for the structure and the name of the file. Both arguments are strings, and the structure name can be anything you like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s1">&#39;7aiz&#39;</span><span class="p">,</span> <span class="s1">&#39;data/7aiz.pdb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Despite the name, the <code class="docutils literal notranslate"><span class="pre">PDB</span></code> module contains tools for dealing with the other file formats such as mmCIF, PQR, and MMTF. The mmCIF file format is the successor to the PDB format making it an increasingly common file format. The good news is that parsing different structural files is almost identical as Biopython deals with most of the file format details behind the scenes. The only difference in dealing with mmCIF files versus PDB in Biopython is that we use the <code class="docutils literal notranslate"><span class="pre">PDB.MMCIFParser()</span></code> function to read the mmCIF file instead of <code class="docutils literal notranslate"><span class="pre">PDB.PDBParser()</span></code>, so mmCIF code would look like the following.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">MMCIFParser</span><span class="p">()</span>
+<span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s1">&#39;7aiz&#39;</span><span class="p">,</span> <span class="s1">&#39;data/7aiz.cif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A list of various file parsers is provided in Table 5.</p>
+<p><strong>Table 5</strong> Selected File Parser Functions from <code class="docutils literal notranslate"><span class="pre">Bio.PDB</span></code></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>File Type</p></th>
+<th class="head"><p>Parser Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>PDB</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PDB.PDBParser()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>mmCIF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PDB.MMCIFParser()</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>PQR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PDB.PDBParser(is_pqr=True)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>MMTF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bio.PDB.mmtf.MMTFParser()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="writing-files-with-biopython">
+<span id="id10"></span><h3>16.2.3 Writing Files with Biopython<a class="headerlink" href="#writing-files-with-biopython" title="Permalink to this heading">#</a></h3>
+<p>Biopython is also capable of writing structures to new PDB or mmCIF files, but by default it will not include much of the metadata (e.g., resolution, name of structure, authors, etc.) and information about secondary structures in the new files.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additional information can be included in the written file, but the process is a little involved. See the official <a class="reference external" href="https://biopython.org/wiki/Documentation">Biopython documentation</a> for more information.</p>
+</div>
+</aside>
+<p>The general methodology is to first create a writing object using either <code class="docutils literal notranslate"><span class="pre">PDB.PBDIO()</span></code> or <code class="docutils literal notranslate"><span class="pre">PDB.MMCIFIO()</span></code> for creating a new PDB or mmCIF file, respectively. Next, use the <code class="docutils literal notranslate"><span class="pre">set_structure()</span></code> method on the writing object to load the data from an individual structure. Finally, write the file using the <code class="docutils literal notranslate"><span class="pre">save()</span></code> function and providing it with the name of the new file as a string.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># write a new PDB</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">PDBIO</span><span class="p">()</span>
+<span class="n">io</span><span class="o">.</span><span class="n">set_structure</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">io</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;new_protein.pdb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># write a new mmCIF</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">MMCIFIO</span><span class="p">()</span>
+<span class="n">io</span><span class="o">.</span><span class="n">set_structure</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">io</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;new_protein.cif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="accessing-strands-residues-and-atoms">
+<span id="id11"></span><h3>16.2.4 Accessing Strands, Residues, and Atoms<a class="headerlink" href="#accessing-strands-residues-and-atoms" title="Permalink to this heading">#</a></h3>
+<p>The structural data extracted from the PDB or mmCIF by Biopython is organized in the hierarchal order of structure <span class="math notranslate nohighlight">\(\rightarrow\)</span> model <span class="math notranslate nohighlight">\(\rightarrow\)</span> chain <span class="math notranslate nohighlight">\(\rightarrow\)</span> residue <span class="math notranslate nohighlight">\(\rightarrow\)</span> atom. This means that models are contained within the structure, chains are contained within each model, residues are contained within each chain, and atoms are contained within each residue. The structure is the protein, the model is a particular 3D model of the protein, the chain is a single peptide chain in the protein, the residue is single amino acid residue in the chain, and the atom is each atom within a given amino acid residue (Table 6).</p>
+<p><strong>Table 6</strong> Levels of Structure from PDB Data</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Level</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Structure</p></td>
+<td class="text-left"><p>Protein strucuture; may contain multiple models</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Model</p></td>
+<td class="text-left"><p>Particular 3D model of the protein (usually only one)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Chain</p></td>
+<td class="text-left"><p>Pepetide chain</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Residue</p></td>
+<td class="text-left"><p>Amino acid residue in a given chain</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Atom</p></td>
+<td class="text-left"><p>Atoms in a particular amino acid residue</p></td>
+</tr>
+</tbody>
+</table>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the file contains a crystal structure, there is likely only one model, but if the structure came from NMR spectrscopy, there are often multiple structures.</p>
+</div>
+</aside>
+<p>While PDB files can contain multiple models of a protein, most only contain one. Even though there is only one model in our data, we will need to access the first (and only) model using indexing. For the first protein model, use <code class="docutils literal notranslate"><span class="pre">structure[0]</span></code>, and if there were a second, it would be <code class="docutils literal notranslate"><span class="pre">structure[1]</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">protein_model</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because of the hierarchal structure, each level of structure can be accessed by iterating through the level above it. For example, the following code will append all atoms in every residue in every chain in the protein model to a list called <code class="docutils literal notranslate"><span class="pre">atoms</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">protein_model</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">residue</span><span class="p">:</span>
+            <span class="n">atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
+
+<span class="n">atoms</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Atom N&gt;,
+ &lt;Atom CA&gt;,
+ &lt;Atom C&gt;,
+ &lt;Atom O&gt;,
+ &lt;Atom CB&gt;,
+ &lt;Atom CG&gt;,
+ &lt;Atom CD&gt;,
+ &lt;Atom N&gt;,
+ &lt;Atom CA&gt;,
+ &lt;Atom C&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This can add up to a large number of <code class="docutils literal notranslate"><span class="pre">for</span></code> loops in your code. Alternatively, you can get more direction access to the different levels of structure using the following methods that yield a generator</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A <em>generator</em> function contains <code class="docutils literal notranslate"><span class="pre">yield</span></code> in place of <code class="docutils literal notranslate"><span class="pre">return</span></code> and only produces an item upon request (e.g., Python’s <code class="docutils literal notranslate"><span class="pre">range()</span></code> function) to save memory.</p>
+</div>
+</aside>
+<p><strong>Table 7</strong> Functions for Accessing Different Levels of Structure</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Function</p></th>
+<th class="head text-center"><p>Object</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_chains()</span></code></p></td>
+<td class="text-center"><p>Model</p></td>
+<td><p>Accesses peptide chains</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_residues</span></code></p></td>
+<td class="text-center"><p>Model, Chain</p></td>
+<td><p>Accesses amino acid residues</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_atoms()</span></code></p></td>
+<td class="text-center"><p>Model, Chain, Residue</p></td>
+<td><p>Accesses individual atoms</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_parent()</span></code></p></td>
+<td class="text-center"><p>Atom</p></td>
+<td><p>Returns parent residue of atom</p></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the following appends all residues in the protein model to a list and displays the first ten residues.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">protein_model</span><span class="o">.</span><span class="n">get_residues</span><span class="p">():</span>
+    <span class="n">res_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">residue</span><span class="p">)</span>
+
+<span class="n">res_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Residue PRO het=  resseq=2 icode= &gt;,
+ &lt;Residue MET het=  resseq=3 icode= &gt;,
+ &lt;Residue VAL het=  resseq=4 icode= &gt;,
+ &lt;Residue LEU het=  resseq=5 icode= &gt;,
+ &lt;Residue LEU het=  resseq=6 icode= &gt;,
+ &lt;Residue GLU het=  resseq=7 icode= &gt;,
+ &lt;Residue CYS het=  resseq=8 icode= &gt;,
+ &lt;Residue ASP het=  resseq=9 icode= &gt;,
+ &lt;Residue LYS het=  resseq=10 icode= &gt;,
+ &lt;Residue ASP het=  resseq=11 icode= &gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Parts of the protein structure can also be accessed using keys (i.e., the ID’s) of the various levels of structure. This does require more knowledge of the structure beforehand, though. To first get access to the ID’s, you can iterate through a structure and use the <code class="docutils literal notranslate"><span class="pre">get_id()</span></code> method to see all of the substructure ID’s. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">get_unpacked_list()</span></code> function to get a list of all substructures of an object with ID’s. For example, below we iterate through the protein model to get the strand ID’s. The same can be done with iterating through strands to obtain the residue ID’s or through residues to obtain the atom ID’s. The strand and atom ID’s will be letters (strings) while residue ID’s are integers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">strand</span> <span class="ow">in</span> <span class="n">protein_model</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strand</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A
+B
+C
+D
+E
+F
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">strand_A</span> <span class="o">=</span> <span class="n">protein_model</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="n">strand_A</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Chain id=A&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residue_10</span> <span class="o">=</span> <span class="n">strand_A</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">residue_10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Residue LYS het=  resseq=10 icode= &gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a demonstration of both the <code class="docutils literal notranslate"><span class="pre">get_id()</span></code> and <code class="docutils literal notranslate"><span class="pre">get_unpacked_list()</span></code> approaches, below we can see the atoms present in a lysine residue.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CA</span></code> is the <span class="math notranslate nohighlight">\(\alpha\)</span>-carbon in the peptide backbone while <code class="docutils literal notranslate"><span class="pre">C</span></code> is the carbonyl carbon. Additional carbons may be present depending upon the identity of the amino acid.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residue_10</span><span class="o">.</span><span class="n">get_unpacked_list</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Atom N&gt;,
+ &lt;Atom CA&gt;,
+ &lt;Atom C&gt;,
+ &lt;Atom O&gt;,
+ &lt;Atom CB&gt;,
+ &lt;Atom CG&gt;,
+ &lt;Atom CD&gt;,
+ &lt;Atom CE&gt;,
+ &lt;Atom NZ&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">residue_10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N
+CA
+C
+O
+CB
+CG
+CD
+CE
+NZ
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residue_10</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Atom CA&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="attributes-of-residues-and-atoms">
+<span id="id12"></span><h3>16.2.5 Attributes of Residues, and Atoms<a class="headerlink" href="#attributes-of-residues-and-atoms" title="Permalink to this heading">#</a></h3>
+<p>Once we can access the strands and atoms, information can be extracted such as the indentity, 3D coordinates, bond angles, and more. Below is a table of interesting atom attributes/functions.</p>
+<p><strong>Table 8</strong> Selected Atom Attributes/Functions</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Attribute/Function</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></p></td>
+<td><p>Returns the name of the atom as a string</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_coord()</span></code></p></td>
+<td><p>Returns the <em>xyz</em> coordinates of the atom as an array</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_vector()</span></code></p></td>
+<td><p>Returns the <em>xyz</em> coordinates of the atom as a vector object</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code></p></td>
+<td><p>Rotate or translate the atomic coordinates along the <em>xyz</em> axes</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following code is used to obtain the 3D coordinates as arrays for all atoms in the protein model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">protein_model</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">():</span>
+    <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">get_coord</span><span class="p">())</span>
+
+<span class="n">coords</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([ 89.966, -16.871,  91.86 ], dtype=float32),
+ array([ 89.302, -16.084,  90.821], dtype=float32),
+ array([ 89.475, -14.614,  91.157], dtype=float32),
+ array([ 89.936, -14.284,  92.28 ], dtype=float32),
+ array([ 87.831, -16.524,  90.863], dtype=float32)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are a lot of interesting data obtainable from the strands, but getting access to this data is a little more involved. We need to first initiate (i.e., creating) a polypeptide builder object using using <code class="docutils literal notranslate"><span class="pre">PDB.PPBuilder()</span></code> and then build the Polyptetides object using the <code class="docutils literal notranslate"><span class="pre">build_peptides()</span></code> method. The <code class="docutils literal notranslate"><span class="pre">build_peptides()</span></code> function accepts the structure as the one required argument and by default only returns standard amine acids in the peptide chains unless the <code class="docutils literal notranslate"><span class="pre">aa_only=False</span></code> argument is included. The peptetide information in the example below is stored in the variable <code class="docutils literal notranslate"><span class="pre">peptides</span></code> which shows the six peptide chains in this particular protein structure along with sequence identifier integers that indicate the position of the amino acid along the peptide chain.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ppb</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">PPBuilder</span><span class="p">()</span>
+<span class="n">peptides</span> <span class="o">=</span> <span class="n">ppb</span><span class="o">.</span><span class="n">build_peptides</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">peptides</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Polypeptide start=2 end=474&gt;,
+ &lt;Polypeptide start=12 end=475&gt;,
+ &lt;Polypeptide start=2 end=113&gt;,
+ &lt;Polypeptide start=2 end=474&gt;,
+ &lt;Polypeptide start=11 end=475&gt;,
+ &lt;Polypeptide start=3 end=113&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can iterate through the PolyPeptide object  (<code class="docutils literal notranslate"><span class="pre">peptides</span></code>) to get the individual peptide chains. With the peptide chains, we can obtain information about the peptide chain, such as the names of amino acids, phi (<span class="math notranslate nohighlight">\(\phi\)</span>) and psi (<span class="math notranslate nohighlight">\(\psi\)</span>) angles, etc., using the various methods tabulated below.</p>
+<p><strong>Table 9</strong> Selected <code class="docutils literal notranslate"><span class="pre">strand</span></code> Attributes/Functions</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Attribute/Function</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_sequence()</span></code></p></td>
+<td><p>Returns the squence of each strand using single-letter amino acid codes</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_phi_psi_list()</span></code></p></td>
+<td><p>Returns a list of phi and psi dihedral angles in radians</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_ca_list()</span></code></p></td>
+<td><p>Returns list of alpha carbons</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_theta_list()</span></code></p></td>
+<td><p>Returns a list of theta angles in radians</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">get_tau_list()</span></code></p></td>
+<td><p>Returns list of tau torsional angles in radians</p></td>
+</tr>
+</tbody>
+</table>
+<p>In the example below, we iterate through the peptide strands in <code class="docutils literal notranslate"><span class="pre">peptides</span></code> and print the theta angles in radians.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">strand</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">:</span>
+    <span class="n">C_a</span> <span class="o">=</span> <span class="n">strand</span><span class="o">.</span><span class="n">get_theta_list</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">C_a</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.9516790193468274, 2.287601877880969, 1.7982004900815982, 2.0633166789273374, 1.5825173083130313]
+[2.3268945513738237, 1.848500563201942, 2.2282952590602303, 2.005889321472149, 2.3504604293450675]
+[1.511341690238054, 1.5829981072097719, 1.5844900414925847, 1.584810281608523, 1.5520394272913545]
+[1.9673252796978447, 2.3178730899065365, 1.7942727121398567, 2.0482924789612516, 1.595800728474192]
+[1.971514259887586, 2.2624600169176046, 1.7954830025275168, 2.2251480149170493, 2.014815418260001]
+[2.216191919496574, 1.508875006315003, 1.5822328296905053, 1.5280194883863312, 1.6121663625568363]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ramachandran-plots">
+<span id="id13"></span><h3>16.2.6 Ramachandran Plots<a class="headerlink" href="#ramachandran-plots" title="Permalink to this heading">#</a></h3>
+<p id="index-5">As an example application, we can generate a Ramachandran plot which visualizes the trends of the psi (<span class="math notranslate nohighlight">\(\psi\)</span>) versus phi (<span class="math notranslate nohighlight">\(\phi\)</span>) dihedral angles along peptide chains. While the omega (<span class="math notranslate nohighlight">\(\omega\)</span>) dihedral angles tend to be flat, the psi (<span class="math notranslate nohighlight">\(\psi\)</span>) versus phi (<span class="math notranslate nohighlight">\(\phi\)</span>) dihedral angles tend to exist in distinct ranges.</p>
+<p><img alt="peptide_angles" src="../../_images/tripeptide.svg" /></p>
+<p>The general methodology below is:</p>
+<ol class="arabic simple">
+<li><p>Parse PDB files in the <strong>data/proteins</strong> folder using a PDB parser</p></li>
+<li><p>Build a PolyPeptide object using a PDB builder</p></li>
+<li><p>Iterate over the peptides and store the psi (<span class="math notranslate nohighlight">\(\psi\)</span>) and phi (<span class="math notranslate nohighlight">\(\phi\)</span>) dihedral angles</p></li>
+<li><p>Plot the results as psi (<span class="math notranslate nohighlight">\(\psi\)</span>) versus phi (<span class="math notranslate nohighlight">\(\phi\)</span>)</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span><span class="p">,</span> <span class="n">psi</span>  <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_directory</span><span class="p">,</span> <span class="s1">&#39;data/proteins&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">PDBParser</span><span class="p">()</span>
+<span class="n">ppb</span> <span class="o">=</span> <span class="n">PDB</span><span class="o">.</span><span class="n">PPBuilder</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;data/proteins&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;pdb&#39;</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span><span class="n">file</span><span class="p">))</span>
+        <span class="n">peptides</span> <span class="o">=</span> <span class="n">ppb</span><span class="o">.</span><span class="n">build_peptides</span><span class="p">(</span><span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">strand</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">:</span>
+            <span class="n">phi</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">strand</span><span class="o">.</span><span class="n">get_phi_psi_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">psi</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">strand</span><span class="o">.</span><span class="n">get_phi_psi_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-1.3622662865512234,
+ -2.082128843031602,
+ -1.629730041310295,
+ -1.2628488964604423,
+ -1.0321883323569294,
+ -1.1999644248445689,
+ -1.947941926012007,
+ -0.9393921001349734,
+ -1.6608728663825387,
+ -2.2830767525823616]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;phi $\phi$, degrees&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;psi $\psi$, degrees&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9f598c8c9005969816fb343986f6064c085b8fbfe2ceeb800e2729a67dd90a4f.svg" src="../../_images/9f598c8c9005969816fb343986f6064c085b8fbfe2ceeb800e2729a67dd90a4f.svg" /></div>
+</div>
+<p>You may notice that the first and last dihedral angles were sliced off the list of phi and psi angles (last two lines of code). This is because there are no phi (<span class="math notranslate nohighlight">\(\phi\)</span>) values for first amino acid and no psi (<span class="math notranslate nohighlight">\(\psi\)</span>) values in the last amino acid of a strand. Dihedral angle measurements require four atoms, and the terminal amino acids are missing one of the required four atoms. For example, phi (<span class="math notranslate nohighlight">\(\phi\)</span>) dihedral angles are measured from the N-C<span class="math notranslate nohighlight">\(_\alpha\)</span> bond of a C(O)-N-C<span class="math notranslate nohighlight">\(_\alpha\)</span>-C(O) chain of atoms, but the first amine acid only has N-C<span class="math notranslate nohighlight">\(_\alpha\)</span>-C(O).</p>
+<p>The Ramachandran plot above is in radians which can be converted to degree (1 radian = 180/<span class="math notranslate nohighlight">\(\pi\)</span>) as is done below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="n">psi_deg</span> <span class="o">=</span> <span class="p">[</span><span class="n">rad</span> <span class="o">*</span> <span class="p">(</span><span class="mi">180</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="k">for</span> <span class="n">rad</span> <span class="ow">in</span> <span class="n">psi</span><span class="p">]</span>
+<span class="n">phi_deg</span> <span class="o">=</span> <span class="p">[</span><span class="n">rad</span> <span class="o">*</span> <span class="p">(</span><span class="mi">180</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="k">for</span> <span class="n">rad</span> <span class="ow">in</span> <span class="n">phi</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">phi_deg</span><span class="p">,</span> <span class="n">psi_deg</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;phi $\phi$, degrees&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;psi $\psi$, degrees&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f6f76aab4d82520c8752a49f83c10025ad967b3c024920a03fb72376072f6ab3.svg" src="../../_images/f6f76aab4d82520c8752a49f83c10025ad967b3c024920a03fb72376072f6ab3.svg" /></div>
+</div>
+<p>Other representations of Ramachandran plots using different plotting types or color coding the markers based on secondary protein structure can be seen in the <a class="reference external" href="https://weisscharlesj.github.io/BiopythonRamachandran/VisTop8000_COMPLETE/03Ramachandran/03Ramachandran_Plot_v8.html">Notebook 3 of the Visualization of Top8000 Protein Dataset</a> mini tutorial.</p>
+</section>
+</section>
+<section id="visualization-of-molecules">
+<span id="id14"></span><h2>16.3 Visualization of Molecules<a class="headerlink" href="#visualization-of-molecules" title="Permalink to this heading">#</a></h2>
+<p>There are many pieces of software for viewing molecular structures directly from your desktop, but there are currently few for viewing structures within a Jupyter notebook. This section provides a brief introduction to nglview for interactively viewing molecular structures. Additional information on nglview can be found on the <a class="reference external" href="https://nglviewer.org/ngl/api/manual/index.html">nglview documentation page</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As of this writing, nglview can be a little more difficult to get working on JupyterLab but seems to work better in the classic Jupyter notebook viewer, so if you are having difficulties, consider trying the <a class="reference external" href="https://docs.jupyter.org/en/latest/install/notebook-classic.html">classic Jupyter Notebook</a> interface. Most features in nglview work for me in JupterLab after installation and a restart with the exception of the <code class="docutils literal notranslate"><span class="pre">get_file()</span></code> function.</p>
+</div>
+<p>Nglview is not a standard library for Anaconda or Colab, so it needs to be installed, and as of this writing, nglview can be installed using either <a class="reference external" href="https://pypi.org/project/nglview/">pip</a> or <a class="reference external" href="https://anaconda.org/conda-forge/nglview">conda</a>. Below, it will be imported with the <code class="docutils literal notranslate"><span class="pre">nv</span></code> alias.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nglview</span> <span class="k">as</span> <span class="nn">nv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "5bc3a2d177174317912c0d9c8117b1aa", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<section id="loading-structures-in-nglview">
+<span id="id15"></span><h3>16.3.1 Loading Structures in Nglview<a class="headerlink" href="#loading-structures-in-nglview" title="Permalink to this heading">#</a></h3>
+<p>Molecular structures can be loaded using a number of different sources including directly from files, from RDKit Molecule objects, from Biopython structure objects, and from psi4 molecules among others. Below is table of some key functions for loading molecular structures.</p>
+<p><strong>Table 10</strong> A Selection of Nglview Functions for Loading Structural Data</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Function</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nv.show_file()</span></code></p></td>
+<td><p>Loads from a file (e.g., PDB or mmCIF) on your computer</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nv.show_pdbid()</span></code></p></td>
+<td><p>Fetches data from RCSB database when provided a PDB ID (e.g., 7aiz)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nv.show_rdkit()</span></code></p></td>
+<td><p>Loads structure from a 3D RDKit Molecule object</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nv.show_biopython()</span></code></p></td>
+<td><p>Loads data from a Biopython structure object</p></td>
+</tr>
+</tbody>
+</table>
+<p>As our first example, we will load a file using the <code class="docutils literal notranslate"><span class="pre">show_pdbid()</span></code> function which accepts a protein ID as a string and fetches the structure from the <a class="reference external" href="https://www.rcsb.org/">RCSB Database</a>. The structure is displayed in an interactive window where clicking and dragging rotates the molecule and scrolling zooms in and out. The size of this window can be expanded or contracted using the little gray arrow control(s) on the right corners of the display window.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binding_prot</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_pdbid</span><span class="p">(</span><span class="s1">&#39;3ez7&#39;</span><span class="p">)</span>
+<span class="n">binding_prot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "491cb018a66e4e019b02ff221bda3aae", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>We can also view a molecule loaded from a Biopython structure object (see <a class="reference internal" href="#id9"><span class="std std-ref">section 16.2.2</span></a>) using the <code class="docutils literal notranslate"><span class="pre">show_biopython()</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s1">&#39;7aiz&#39;</span><span class="p">,</span> <span class="s1">&#39;data/7aiz.pdb&#39;</span><span class="p">)</span>
+<span class="n">prot_struct</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_biopython</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+<span class="n">prot_struct</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "7a2ed8e7fc5c4827a0b077a40cf90f1d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>RDKit Molecule objects can also be viewed in nglview using the <code class="docutils literal notranslate"><span class="pre">show_rdkit()</span></code> function, but first a 3D presentation of the molecule needs to be generated using the <code class="docutils literal notranslate"><span class="pre">AllChem.EmbedMolecule(mol_object)</span></code> function. Many SMILES representations do not includes all of the hydrogens, so implicit hydrogens need to be added in using the <code class="docutils literal notranslate"><span class="pre">Chem.AddHs()</span></code> method. The visualization of glucose 6-phosphate from a SMILES representation is shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rdkit</span> <span class="kn">import</span> <span class="n">Chem</span>
+<span class="kn">from</span> <span class="nn">rdkit.Chem</span> <span class="kn">import</span> <span class="n">AllChem</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">Chem</span><span class="o">.</span><span class="n">MolFromSmiles</span><span class="p">(</span><span class="s1">&#39;O[C@H]1[C@H](O)[C@@H](COP(O)(O)=O)OC(O)[C@@H]1O&#39;</span><span class="p">)</span>
+<span class="n">mol</span> <span class="o">=</span> <span class="n">Chem</span><span class="o">.</span><span class="n">AddHs</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span> <span class="c1"># add H&#39;s</span>
+<span class="n">AllChem</span><span class="o">.</span><span class="n">EmbedMolecule</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span> <span class="c1"># generate 3D structure</span>
+
+<span class="n">G6P</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_rdkit</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">G6P</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9f215097a1804d82b8e84e53379cbe82", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="nglview-representations">
+<span id="id16"></span><h3>16.3.2 Nglview Representations<a class="headerlink" href="#nglview-representations" title="Permalink to this heading">#</a></h3>
+<p>The way molecules are represented by nglview can be modified using <code class="docutils literal notranslate"><span class="pre">add_representation(rep)</span></code> which takes a variety of string parameters indicating the representation. A few examples of representations are listed below with a more complete list provided on the <a class="reference external" href="https://nglviewer.org/ngl/api/manual/molecular-representations.html">nglview documentation</a> page.</p>
+<p>The default representation is <code class="docutils literal notranslate"><span class="pre">cartoon</span></code> which shows the peptide backbone as strands and ribbons (for secondary structures). It is important to clear the default representation using the <code class="docutils literal notranslate"><span class="pre">clear_representation()</span></code> method before adding a new representation. Otherwise, you will have both representations showing up on top of each other… unless this is what you want.</p>
+<p><strong>Table 11</strong> Selected Molecular Representations</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Representation</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">cartoon</span></code></p></td>
+<td><p>Cartoon with strands and ribbons; sidechains not shown</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">ball+stick</span></code></p></td>
+<td><p>Atomic spheres and stick bonds; sidechains shown</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">licorice</span></code></p></td>
+<td><p>Ball and stick where atoms and bonds have the same radii; sidechains shown</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">spacefill</span></code></p></td>
+<td><p>Spacefilling model with atoms showing atomic size; sidechains shown</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">rope</span></code></p></td>
+<td><p>Backbone is shown as a tube; sidechains not shown</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ballstick</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_pdbid</span><span class="p">(</span><span class="s1">&#39;1rxt&#39;</span><span class="p">)</span>
+<span class="n">ballstick</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+<span class="n">ballstick</span><span class="o">.</span><span class="n">add_representation</span><span class="p">(</span><span class="s1">&#39;ball+stick&#39;</span><span class="p">)</span>
+<span class="n">ballstick</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "0c71989e6f3e4ca0a49a016f7a1508d7", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">licorice</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_pdbid</span><span class="p">(</span><span class="s1">&#39;1rxt&#39;</span><span class="p">)</span>
+<span class="n">licorice</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+<span class="n">licorice</span><span class="o">.</span><span class="n">add_representation</span><span class="p">(</span><span class="s1">&#39;licorice&#39;</span><span class="p">)</span>
+<span class="n">licorice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "705dfdf3961146af9fc154351668205b", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Different sections of a protein can be represented differently using the <code class="docutils literal notranslate"><span class="pre">selection=</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">add_representation()</span></code> function. This includes using residue numbers from the structure file or using a variety of string arguments that select different types of structures. A short list of options is included below with a more complete list on the <a class="reference external" href="https://nglviewer.org/ngl/api/manual/selection-language.html">nglview documentat</a> page.</p>
+<p><strong>Table 12</strong> Selected Options for the <code class="docutils literal notranslate"><span class="pre">selection=</span></code> Parameter</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Selection Option</p></th>
+<th class="head"><p>Surace surrounded region(s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">All</span></code></p></td>
+<td><p>Everything (default)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">protein</span></code></p></td>
+<td><p>Peptide chains</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">dna</span></code></p></td>
+<td><p>DNA regions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">water</span></code></p></td>
+<td><p>Waters</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">helix</span></code></p></td>
+<td><p>Helicies</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">sheet</span></code></p></td>
+<td><p>Sheets</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">hydrophobic</span></code></p></td>
+<td><p>Hydrophobic amino acids</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">hydrophilic</span></code></p></td>
+<td><p>Hydrophilic amino acids</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">acidic</span></code></p></td>
+<td><p>Acidic amino acids</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">basic</span></code></p></td>
+<td><p>Basic amino acids</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">polar</span></code></p></td>
+<td><p>Polar amino acids</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">nonpolar</span></code></p></td>
+<td><p>Nonpolar amino acids</p></td>
+</tr>
+</tbody>
+</table>
+<p>As an example, we can show a protein structure with the backbone as the defaul cartoon and the sidechains using a licorice structure as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_pdbid</span><span class="p">(</span><span class="s1">&#39;1rxt&#39;</span><span class="p">)</span>
+<span class="n">mixed</span><span class="o">.</span><span class="n">add_representation</span><span class="p">(</span><span class="s1">&#39;licorice&#39;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;sidechains&#39;</span><span class="p">)</span>
+<span class="n">mixed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ad2df9db85324c079a2d20df19178fb8", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="showing-surfaces">
+<span id="id17"></span><h3>16.3.3 Showing Surfaces<a class="headerlink" href="#showing-surfaces" title="Permalink to this heading">#</a></h3>
+<p>To view the molecule with a surface, use the <code class="docutils literal notranslate"><span class="pre">add_surface()</span></code> method which takes a number of optional parameters. Possibly the most important is <code class="docutils literal notranslate"><span class="pre">opacity=</span></code> which accepts a float from 0 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 1 indicating how opaque the surface is with 1 exhibiting no translucency and 0 being completely transparent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_surface</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_biopython</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+<span class="n">full_surface</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">full_surface</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "12b9a57e2b8146efaa51d569eec9fa4f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Another useful parameter is the <code class="docutils literal notranslate"><span class="pre">selection=</span></code> parameter that operates like described in <a class="reference internal" href="#id16"><span class="std std-ref">section 16.3.2</span></a> where only the selected components have a surface around them. In the example below, only acidic amino acids are wrapped in a surface.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acidic</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_pdbid</span><span class="p">(</span><span class="s1">&#39;8pfy&#39;</span><span class="p">)</span>
+<span class="n">acidic</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+<span class="n">acidic</span><span class="o">.</span><span class="n">add_representation</span><span class="p">(</span><span class="s1">&#39;licorice&#39;</span><span class="p">)</span>
+<span class="n">acidic</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s1">&#39;acidic&#39;</span><span class="p">,</span>
+                   <span class="n">opacity</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> 
+                   <span class="n">color</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">)</span>
+<span class="n">acidic</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "22a5c85db0554b8aa8333aa245e840fd", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>We can also use <code class="docutils literal notranslate"><span class="pre">and</span></code> and <code class="docutils literal notranslate"><span class="pre">or</span></code> to produce more complex selections such as below where we only wrap backbones of residues that are acidic or basic and must only be in strand B.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acidbase</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_biopython</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+<span class="n">acidbase</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+<span class="n">acidbase</span><span class="o">.</span><span class="n">add_representation</span><span class="p">(</span><span class="s1">&#39;licorice&#39;</span><span class="p">)</span>
+<span class="n">acidbase</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="s1">&#39;:B and backbone and (basic or acidic)&#39;</span><span class="p">,</span>
+                   <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> 
+                   <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+<span class="n">acidbase</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "0c30bd7b022046f9a48560c5042be43e", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<span id="fr16"></span><h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>PDB format documentation. <a class="reference external" href="https://www.wwpdb.org/documentation/file-format">https://www.wwpdb.org/documentation/file-format</a> (free resource)</p></li>
+<li><p>Introduction to PDB File Format. <a class="reference external" href="https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html">https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html</a> (free resource)</p></li>
+<li><p>Biopython Website. <a class="reference external" href="https://biopython.org">https://biopython.org</a> (free resource)</p></li>
+<li><p>Nglview Manual. <a class="reference external" href="https://nglviewer.org/ngl/api/manual/index.html">https://nglviewer.org/ngl/api/manual/index.html</a> (free resource)</p></li>
+<li><p>Scikit-bio Website. <a class="reference external" href="http://scikit-bio.org">http://scikit-bio.org</a> (free resource). This is another related library with many similar features that may be of interest to Biopython users.</p></li>
+<li><p>Biopython Publication. Cock, P. J. A.; Antao, T.; Chang, J. T.; Chapman, B. A.; Cox, C. J.; Dalke, A.; Friedberg, I.; Hamelryck, T.; Kauff, F.; Wilczynski, B.; De Hoon, M. J. L. Biopython: Freely Available Python Tools for Computational Molecular Biology and Bioinformatics. <em>Bioinformatics</em> <strong>2009,</strong> 25, 1422– 1423,</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/chapter_16"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter_15/chap_15_notebook.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 15: RDKit for Cheminformatics <font color = C51E3A> (BETA) </font></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../genindex.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Index</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-sequences">16.1 Working with Sequences</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-fasta-files-with-biopython">16.1.1 Reading FASTA Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gc-content-of-nucleotide-sequence">16.1.2 GC Content of Nucleotide Sequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nucleic-acids-transcription-translation-and-replication">16.1.3 Nucleic Acids - Transcription, Translation, and Replication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-alignment">16.1.4 Sequence Alignment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-information">16.2 Structural Information</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-pdb-files-with-python">16.2.1 Reading PDB Files with Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-structural-files-with-biopython">16.2.2 Reading Structural Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-files-with-biopython">16.2.3 Writing Files with Biopython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-strands-residues-and-atoms">16.2.4 Accessing Strands, Residues, and Atoms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes-of-residues-and-atoms">16.2.5 Attributes of Residues, and Atoms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ramachandran-plots">16.2.6 Ramachandran Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-molecules">16.3 Visualization of Molecules</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-structures-in-nglview">16.3.1 Loading Structures in Nglview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nglview-representations">16.3.2 Nglview Representations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-surfaces">16.3.3 Showing Surfaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Charles J. Weiss
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2017-2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Scientific Computing for Chemists with Python is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
